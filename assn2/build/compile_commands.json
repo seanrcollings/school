@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/sean/sourcecode/school/cpp/assn2/build",
+  "command": "/usr/bin/c++ -g -Wall -Wextra -pedantic -o CMakeFiles/RandDistributions.dir/Assignment2.cpp.o -c /home/sean/sourcecode/school/cpp/assn2/Assignment2.cpp",
+  "file": "/home/sean/sourcecode/school/cpp/assn2/Assignment2.cpp"
+}
+]

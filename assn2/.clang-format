@@ -1,0 +1,9 @@
+Language: Cpp
+BreakBeforeBraces : Allman
+IndentCaseLabels: true
+NamespaceIndentation: Inner
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+DerivePointerAlignment: false
+PointerAlignment: Left
