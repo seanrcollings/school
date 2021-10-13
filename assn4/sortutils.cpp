@@ -62,8 +62,7 @@ std::chrono::nanoseconds sort(Iter begin, Iter end, Policy policy)
     return endTime - startTime;
 }
 
-template <typename T>
-void evaluateSingleArrangement(std::string name, T array, Policy policy, ArrayKind kind)
+void evaluateSingleArrangement(std::string name, SourceArray array, Policy policy, ArrayKind kind)
 {
     using namespace std::chrono;
     auto total = nanoseconds(0);
