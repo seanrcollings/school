@@ -1,10 +1,15 @@
 #include "WordTree.hpp"
+#include "rlutil.h"
 
 #include <algorithm>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <memory>
+#include <sstream>
 #include <string>
+#include <vector>
 
 std::shared_ptr<WordTree> readDictionary(std::string filename)
 {
@@ -38,19 +43,68 @@ std::shared_ptr<WordTree> readDictionary(std::string filename)
     return wordTree;
 }
 
-// abandon    abandon
-// abandoned  abandoneis
-// abandoning abandoneisd
-// abandons   abandoneisdng
+template <typename Out>
+void split(const std::string& s, char delim, Out result)
+{
+    std::istringstream iss(s);
+    std::string item;
+    while (std::getline(iss, item, delim))
+    {
+        *result++ = item;
+    }
+}
+
+std::vector<std::string> split(const std::string& s, char delim)
+{
+    std::vector<std::string> elems;
+    split(s, delim, std::back_inserter(elems));
+    return elems;
+}
+
+void renderSuggestions(std::vector<std::string>& suggestions)
+{
+    rlutil::locate(2, 4);
+    std::cout << "--- Suggestions ---\n";
+    for (std::string word : suggestions)
+    {
+        std::cout << word << std::endl;
+    }
+}
 
 int main()
 {
-    auto tree = readDictionary("dictionary.txt");
-    // std::cout << tree->size() << std::endl;
-    // std::cout << tree->find("aardvark") << std::endl;
-    auto predictions = tree->predict("aba", 10);
-    for (std::string s : predictions)
+    auto tree = readDictionary("big_dictionary.txt");
+    int const startRow = 2;
+    int currColumn = 1;
+    std::string buffer = "";
+
+    while (true)
     {
-        std::cout << s << ' ';
+        rlutil::cls();
+        rlutil::locate(1, startRow);
+        std::cout << buffer;
+
+        auto words = split(buffer, ' ');
+        auto lastWord = words.size() > 0 ? words[words.size() - 1] : "";
+        auto predictions = tree->predict(lastWord, 20);
+
+        renderSuggestions(predictions);
+        rlutil::locate(currColumn, startRow);
+
+        auto key = rlutil::getkey();
+        if (key == rlutil::KEY_BACKSPACE)
+        {
+            buffer = buffer.substr(0, buffer.size() - 1);
+            if (currColumn > 1)
+            {
+                currColumn--;
+            }
+        }
+        // Key is a lower-case english letter or the space key
+        else if ((key >= 97 && key <= 122) || key == rlutil::KEY_SPACE)
+        {
+            buffer += key;
+            currColumn++;
+        }
     }
 }

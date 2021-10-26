@@ -13,7 +13,7 @@ const int ALPHA_OFFSET = 97;
 void WordTree::add(std::string word)
 {
     auto curr = m_root;
-
+    bool addedWord = false;
     for (char c : word)
     {
         int pos = c - ALPHA_OFFSET;
@@ -29,11 +29,15 @@ void WordTree::add(std::string word)
         {
             next = std::make_shared<Node>(c);
             curr = next;
+            addedWord = true;
         }
     }
 
     curr->endOfWord = true;
-    m_size++;
+    if (addedWord)
+    {
+        m_size++;
+    }
 }
 
 std::shared_ptr<Node> WordTree::traverse(std::string str)
@@ -62,15 +66,13 @@ bool WordTree::find(std::string word)
     return curr ? curr->endOfWord : false;
 }
 
-void bfs(std::queue<std::shared_ptr<Node>>& queue, std::string partial, std::vector<std::string>& words)
+void dfs(std::shared_ptr<Node>& node, std::string partial, std::vector<std::string>& words, std::uint8_t howMany)
 {
-    if (queue.empty())
+
+    if (!node || words.size() >= howMany)
     {
         return;
     }
-
-    auto node = queue.front();
-    queue.pop();
 
     if (node->endOfWord)
     {
@@ -81,28 +83,27 @@ void bfs(std::queue<std::shared_ptr<Node>>& queue, std::string partial, std::vec
     {
         if (child)
         {
-            queue.push(child);
+            dfs(child, partial + node->character, words, howMany);
         }
-    }
-
-    std::cout << partial << std::endl;
-    bfs(queue, partial + node->character, words);
+    };
 }
 
 std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t howMany)
 {
     auto vec = std::vector<std::string>();
     auto curr = traverse(partial);
-    if (!curr)
+    if (!curr || partial.length() == 0)
     {
         return vec;
     }
 
-    // Perform a Breadth first search
-    std::queue<std::shared_ptr<Node>> queue;
-    queue.push(curr);
-
-    bfs(queue, partial.substr(0, partial.length() - 1), vec);
+    for (std::shared_ptr<Node> child : curr->children)
+    {
+        if (child)
+        {
+            dfs(child, partial, vec, howMany);
+        }
+    };
 
     return vec;
 }
