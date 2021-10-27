@@ -3,7 +3,11 @@
 #include <iostream>
 #include <memory>
 #include <queue>
+#include <utility>
 #include <vector>
+
+using NodePair = std::pair<std::shared_ptr<Node>, std::string>;
+using NodeQueue = std::queue<NodePair>;
 
 // Character 'a' is ASCII char 97
 // By subtracting 97 from the given char
@@ -66,46 +70,36 @@ bool WordTree::find(std::string word)
     return curr ? curr->endOfWord : false;
 }
 
-void dfs(std::shared_ptr<Node>& node, std::string partial, std::vector<std::string>& words, std::uint8_t howMany)
-{
-
-    if (!node || words.size() >= howMany)
-    {
-        return;
-    }
-
-    if (node->endOfWord)
-    {
-        words.push_back(partial + node->character);
-    }
-
-    for (std::shared_ptr<Node> child : node->children)
-    {
-        if (child)
-        {
-            dfs(child, partial + node->character, words, howMany);
-        }
-    };
-}
-
 std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t howMany)
 {
-    auto vec = std::vector<std::string>();
-    auto curr = traverse(partial);
-    if (!curr || partial.length() == 0)
+    auto words = std::vector<std::string>();
+    auto root = traverse(partial);
+
+    // Breadth First Search
+    NodeQueue queue;
+    queue.push(NodePair{ root, partial });
+
+    while (!queue.empty() && words.size() < howMany)
     {
-        return vec;
+        auto pair = queue.front();
+        auto node = pair.first;
+        auto partial = pair.second;
+        queue.pop();
+
+        for (std::shared_ptr<Node> child : node->children)
+        {
+            if (child)
+            {
+                if (child->endOfWord)
+                {
+                    words.push_back(partial + child->character);
+                }
+                queue.push(NodePair{ child, partial + child->character });
+            }
+        }
     }
 
-    for (std::shared_ptr<Node> child : curr->children)
-    {
-        if (child)
-        {
-            dfs(child, partial, vec, howMany);
-        }
-    };
-
-    return vec;
+    return words;
 }
 
 std::size_t WordTree::size()

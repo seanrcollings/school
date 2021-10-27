@@ -73,7 +73,7 @@ void renderSuggestions(std::vector<std::string>& suggestions)
 
 int main()
 {
-    auto tree = readDictionary("big_dictionary.txt");
+    auto tree = readDictionary("dictionary.txt");
     int const startRow = 2;
     int currColumn = 1;
     std::string buffer = "";
