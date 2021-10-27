@@ -62,7 +62,7 @@ bool WordTree::find(std::string word)
     return curr ? curr->endOfWord : false;
 }
 
-void bfs(std::queue<std::shared_ptr<Node>>& queue, std::string partial, std::vector<std::string>& words)
+void bfs(std::queue<std::shared_ptr<Node>> queue, std::string partial, std::vector<std::string>& words)
 {
     if (queue.empty())
     {
@@ -72,20 +72,18 @@ void bfs(std::queue<std::shared_ptr<Node>>& queue, std::string partial, std::vec
     auto node = queue.front();
     queue.pop();
 
-    if (node->endOfWord)
-    {
-        words.push_back(partial + node->character);
-    }
-
     for (std::shared_ptr<Node> child : node->children)
     {
         if (child)
         {
+            if (child->endOfWord)
+            {
+                words.push_back(partial + child->character);
+            }
             queue.push(child);
         }
     }
 
-    std::cout << partial << std::endl;
     bfs(queue, partial + node->character, words);
 }
 
@@ -93,16 +91,11 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
 {
     auto vec = std::vector<std::string>();
     auto curr = traverse(partial);
-    if (!curr)
-    {
-        return vec;
-    }
 
-    // Perform a Breadth first search
     std::queue<std::shared_ptr<Node>> queue;
     queue.push(curr);
 
-    bfs(queue, partial.substr(0, partial.length() - 1), vec);
+    bfs(queue, partial, vec);
 
     return vec;
 }

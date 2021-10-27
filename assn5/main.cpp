@@ -48,7 +48,7 @@ int main()
     auto tree = readDictionary("dictionary.txt");
     // std::cout << tree->size() << std::endl;
     // std::cout << tree->find("aardvark") << std::endl;
-    auto predictions = tree->predict("aba", 10);
+    auto predictions = tree->predict("abando", 10);
     for (std::string s : predictions)
     {
         std::cout << s << ' ';
