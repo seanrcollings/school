@@ -85,7 +85,7 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
     {
         auto pair = queue.front();
         auto node = pair.first;
-        auto partial = pair.second;
+        auto currPartial = pair.second;
         queue.pop();
 
         for (std::size_t i = 0; i < node->children.size(); i++)
@@ -95,9 +95,9 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
             {
                 if (child->endOfWord)
                 {
-                    words.push_back(partial + static_cast<char>(i + ALPHA_OFFSET));
+                    words.push_back(currPartial + static_cast<char>(i + ALPHA_OFFSET));
                 }
-                queue.push(NodePair{ child, partial + static_cast<char>(i + ALPHA_OFFSET) });
+                queue.push(NodePair{ child, currPartial + static_cast<char>(i + ALPHA_OFFSET) });
             }
         }
     }
