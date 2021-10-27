@@ -31,7 +31,7 @@ void WordTree::add(std::string word)
         // Character needs to be inserted into the tree
         else
         {
-            next = std::make_shared<Node>(c);
+            next = std::make_shared<Node>();
             curr = next;
             addedWord = true;
         }
@@ -65,8 +65,6 @@ std::shared_ptr<Node> WordTree::traverse(std::string str)
 bool WordTree::find(std::string word)
 {
     auto curr = traverse(word);
-    // Should this even check endOfWord, or just that
-    // it exists?
     return curr ? curr->endOfWord : false;
 }
 
@@ -74,6 +72,10 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
 {
     auto words = std::vector<std::string>();
     auto root = traverse(partial);
+    if (partial.size() == 0 || !root)
+    {
+        return words;
+    }
 
     // Breadth First Search
     NodeQueue queue;
@@ -86,15 +88,16 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
         auto partial = pair.second;
         queue.pop();
 
-        for (std::shared_ptr<Node> child : node->children)
+        for (std::size_t i = 0; i < node->children.size(); i++)
         {
+            auto child = node->children[i];
             if (child)
             {
                 if (child->endOfWord)
                 {
-                    words.push_back(partial + child->character);
+                    words.push_back(partial + static_cast<char>(i + ALPHA_OFFSET));
                 }
-                queue.push(NodePair{ child, partial + child->character });
+                queue.push(NodePair{ child, partial + static_cast<char>(i + ALPHA_OFFSET) });
             }
         }
     }

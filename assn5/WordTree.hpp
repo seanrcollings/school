@@ -8,13 +8,11 @@
 
 struct Node
 {
-    char character;
     bool endOfWord;
     std::array<std::shared_ptr<Node>, 26> children;
 
-    Node(char alpha)
+    Node()
     {
-        character = alpha;
         endOfWord = false;
         std::fill(children.begin(), children.end(), nullptr);
     }
@@ -31,7 +29,7 @@ class WordTree
     WordTree()
     {
         m_size = 0;
-        m_root = std::make_shared<Node>('-');
+        m_root = std::make_shared<Node>();
     }
 
   private:
