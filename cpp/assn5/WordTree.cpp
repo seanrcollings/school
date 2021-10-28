@@ -95,7 +95,10 @@ std::vector<std::string> WordTree::predict(std::string partial, std::uint8_t how
             {
                 if (child->endOfWord)
                 {
-                    words.push_back(currPartial + static_cast<char>(i + ALPHA_OFFSET));
+                    if (words.size() < howMany)
+                    {
+                        words.push_back(currPartial + static_cast<char>(i + ALPHA_OFFSET));
+                    }
                 }
                 queue.push(NodePair{ child, currPartial + static_cast<char>(i + ALPHA_OFFSET) });
             }

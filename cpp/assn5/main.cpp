@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 
+int const PREDICTIONS = 20;
+
 std::shared_ptr<WordTree> readDictionary(std::string filename)
 {
     auto wordTree = std::make_shared<WordTree>();
@@ -64,7 +66,12 @@ std::vector<std::string> split(const std::string& s, char delim)
 void renderSuggestions(std::vector<std::string>& suggestions)
 {
     rlutil::locate(2, 4);
-    std::cout << "--- Suggestions ---\n";
+    std::cout << "--- Suggestions ---";
+    for (int i = 0; i <= PREDICTIONS; i++)
+    {
+        std::cout << std::setw(rlutil::tcols()) << " " << std::endl;
+    }
+    rlutil::locate(1, 5);
     for (std::string word : suggestions)
     {
         std::cout << word << std::endl;
@@ -78,15 +85,15 @@ int main()
     int currColumn = 1;
     std::string buffer = "";
 
+    rlutil::cls();
     while (true)
     {
-        rlutil::cls();
         rlutil::locate(1, startRow);
         std::cout << buffer;
 
         auto words = split(buffer, ' ');
         auto lastWord = words.size() > 0 ? words[words.size() - 1] : "";
-        auto predictions = tree->predict(lastWord, 20);
+        auto predictions = tree->predict(lastWord, PREDICTIONS);
 
         renderSuggestions(predictions);
         rlutil::locate(currColumn, startRow);
@@ -95,6 +102,7 @@ int main()
         if (key == rlutil::KEY_BACKSPACE)
         {
             buffer = buffer.substr(0, buffer.size() - 1);
+            rlutil::setChar(' ');
             if (currColumn > 1)
             {
                 currColumn--;
