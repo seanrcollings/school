@@ -3,5 +3,5 @@
 class Renderer
 {
   public:
-    virtual void render(LifeSimulator& simulation) = 0;
+    virtual void render(const LifeSimulator& simulation) = 0;
 };
