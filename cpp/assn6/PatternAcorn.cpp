@@ -14,5 +14,5 @@ std::uint8_t PatternAcorn::getSizeY() const
 
 bool PatternAcorn::getCell(std::uint8_t x, std::uint8_t y) const
 {
-    return board[x][y];
+    return board[y][x];
 }

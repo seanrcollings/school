@@ -10,6 +10,7 @@ set(HEADER_FILES
     PatternBlinker.hpp
     PatternGlider.hpp
     PatternGosperGliderGun.hpp
+    PatternBlock.hpp
     Renderer.hpp
     RenderConsole.hpp
 )
@@ -18,6 +19,7 @@ set(SOURCE_FILES
     PatternAcorn.cpp
     PatternBlinker.cpp
     PatternGlider.cpp
+    PatternBlock.cpp
     PatternGosperGliderGun.cpp
     RenderConsole.cpp
 )

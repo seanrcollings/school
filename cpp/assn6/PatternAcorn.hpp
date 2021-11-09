@@ -8,14 +8,14 @@
 class PatternAcorn : public Pattern
 {
   public:
-    virtual std::uint8_t getSizeX() const;
-    virtual std::uint8_t getSizeY() const;
-    virtual bool getCell(std::uint8_t x, std::uint8_t y) const;
+    std::uint8_t getSizeX() const;
+    std::uint8_t getSizeY() const;
+    bool getCell(std::uint8_t x, std::uint8_t y) const;
 
   private:
-    static constexpr std::uint8_t m_sizeX = 3;
-    static constexpr std::uint8_t m_sizeY = 7;
-    static constexpr std::array<std::array<bool, m_sizeY>, m_sizeX> board{ { { 0, 1, 0, 0, 0, 0, 0 },
+    static constexpr std::uint8_t m_sizeX = 7;
+    static constexpr std::uint8_t m_sizeY = 3;
+    static constexpr std::array<std::array<bool, m_sizeX>, m_sizeY> board{ { { 0, 1, 0, 0, 0, 0, 0 },
                                                                              { 0, 0, 0, 1, 0, 0, 0 },
                                                                              { 1, 1, 0, 0, 1, 1, 1 } } };
 };

@@ -15,7 +15,7 @@ class PatternBlinker : public Pattern
   private:
     static constexpr std::uint8_t m_sizeX = 3;
     static constexpr std::uint8_t m_sizeY = 3;
-    static constexpr std::array<std::array<bool, m_sizeY>, m_sizeX> board{ { { false, true, false },
-                                                                             { false, true, false },
-                                                                             { false, true, false } } };
+    static constexpr std::array<std::array<bool, m_sizeY>, m_sizeX> board{ { { 0, 1, 0 },
+                                                                             { 0, 1, 0 },
+                                                                             { 0, 1, 0 } } };
 };
