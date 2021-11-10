@@ -21,8 +21,6 @@ void RenderConsole::setup(const LifeSimulator& simulation)
     }
 
     rlutil::cls();
-    rlutil::hidecursor();
-    rlutil::setColor(rlutil::BLUE);
     signal(SIGINT, teardown);
 }
 
@@ -36,6 +34,9 @@ void RenderConsole::render(const LifeSimulator& simulation)
 
     auto simHeight = simulation.getSizeY();
     auto simWidth = simulation.getSizeX();
+
+    rlutil::hidecursor();
+    rlutil::setColor(rlutil::BLUE);
 
     for (std::uint8_t i = 0; i < simHeight; ++i)
     {
@@ -52,4 +53,6 @@ void RenderConsole::render(const LifeSimulator& simulation)
             }
         }
     }
+    rlutil::resetColor();
+    rlutil::showcursor();
 }

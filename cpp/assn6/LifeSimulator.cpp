@@ -31,18 +31,7 @@ bool LifeSimulator::getCell(std::uint8_t x, std::uint8_t y) const
 
 std::vector<bool> LifeSimulator::getNeighbors(uint8_t x, std::uint8_t y) const
 {
-    // Will fail if x or y is on the edge of the board
     std::vector<bool> neighbors;
-    // return {
-    //     board[y - 1][x - 1],
-    //     board[y - 1][x],
-    //     board[y - 1][x + 1],
-    //     board[y][x - 1],
-    //     board[y][x + 1],
-    //     board[y + 1][x - 1],
-    //     board[y + 1][x],
-    //     board[y + 1][x + 1],
-    // };
 
     if (y > 0)
     {
