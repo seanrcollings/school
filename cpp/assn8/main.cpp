@@ -48,6 +48,7 @@ int main()
 
 void demoSharedPointer()
 {
+
     std::shared_ptr<int> p1 = std::make_shared<int>();
     usu::shared_ptr<int> p2 = usu::make_shared<int>();
     usu::shared_ptr<std::string> p2a = usu::make_shared<std::string>();
@@ -113,9 +114,9 @@ void demoSharedPointer()
     MyClass* y = p14.get();
     y->showMessage("from p14.get()");
 
-    // usu::shared_ptr<MyClass[]> a1 = usu::make_shared_array<MyClass, 4>();
-    // for (unsigned int i = 0; i < a1.size(); i++)
-    // {
-    //     a1[i].showMessage("this is a test");
-    // }
+    usu::shared_ptr<MyClass[]> a1 = usu::make_shared_array<MyClass, 4>();
+    for (unsigned int i = 0; i < a1.size(); i++)
+    {
+        a1[i].showMessage("this is a test");
+    }
 }
