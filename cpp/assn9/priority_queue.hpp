@@ -52,8 +52,6 @@ namespace usu
             }
         };
 
-        // According to https://internalpointers.com/post/writing-custom-iterators-modern-cpp
-        // This is all the iterator needs to be valid.
         class iterator : public std::iterator<std::forward_iterator_tag, priority_queue>
         {
 
@@ -63,6 +61,30 @@ namespace usu
 
             iterator(Item* ptr) :
                 m_ptr(ptr) {}
+
+            iterator(const iterator& other)
+            {
+                m_ptr = other.m_ptr;
+            }
+
+            iterator(iterator&& other)
+            {
+                m_ptr = other.m_ptr;
+                other.m_ptr = nullptr;
+            }
+
+            iterator& operator=(const iterator& other)
+            {
+                m_ptr = other.m_ptr;
+                return *this;
+            }
+
+            iterator& operator=(iterator&& other)
+            {
+                m_ptr = other.m_ptr;
+                other.m_ptr = nullptr;
+                return *this;
+            }
 
             Item& operator*() const
             {
