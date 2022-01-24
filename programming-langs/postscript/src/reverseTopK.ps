@@ -1,0 +1,28 @@
+/reverse {
+    /val exch def
+
+    count 0 gt
+    {
+        % loop starts at 0 because we want to move the top value to the bottom initially
+        0 1 val 1 sub
+            {
+                % Where to move the top value to
+                count exch sub
+                1 sub
+                % Move the top value
+                1 roll
+            }
+        for
+
+        % At this point all 1 -> val values are in reversed order on
+        % the bottom of the stack, to get them back to the top,
+        % we need to move the remaining components of the stack
+        % that wasn't in the range of the loop down
+        count val sub
+        count 1 sub
+        exch
+        roll
+    }
+    if
+} def
+

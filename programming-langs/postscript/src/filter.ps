@@ -1,0 +1,19 @@
+/filter {
+    count 0 gt
+    {
+        count 1 sub
+        {
+            exch
+            dup 2 index exec
+            % if the comparison function evaluates to true, remove the top value
+            { pop }
+            % otherwise, move that item to the bottom of the stack, so the
+            % comparison funciton is back on top
+            { count 1 roll }
+            ifelse
+        }
+        repeat
+        pop % Remove the comparison function
+    }
+    if
+} def

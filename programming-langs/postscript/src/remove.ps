@@ -1,0 +1,21 @@
+/remove {
+    count 0 gt
+    {
+        count 1 sub
+        {
+            exch
+            dup 2 index eq
+            % if the top value is equal to the comparison value, remove it
+            { pop }
+            % otherwise, move that item to the bottom of the stack, so the
+            % comparison is back on top
+            { count 1 roll }
+            ifelse
+        }
+        repeat
+        pop % Remove the comparison value
+    }
+    if
+
+} def
+
