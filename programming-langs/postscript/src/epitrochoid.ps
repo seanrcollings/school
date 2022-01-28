@@ -1,3 +1,37 @@
 /epitrochoid {
+    /bigRadius 4 index def
+    /smallRadius 3 index def
+    /armLength 2 index def
+    /timesAround 1 index def
+    clear
 
+    bigRadius smallRadius add armLength add 0 moveto % Moves to the starting location
+    1 1 360 timesAround mul
+    {
+        /angle exch def
+
+        % x(t) = ((a + b) * cos(t)) + (d * cos( ((a+b) * t)/b ))
+        /x
+            bigRadius smallRadius add
+            angle cos mul
+            bigRadius smallRadius add
+            angle mul
+            smallRadius div
+            cos armLength mul
+            add
+        def
+
+        % y(t) = ((a + b) * sin(t)) - (d * sin( ((a+b) * t)/b ))
+        /y
+            bigRadius smallRadius add
+            angle sin mul
+            bigRadius smallRadius add
+            angle mul
+            smallRadius div
+            sin armLength mul
+            sub
+        def
+
+        x y lineto
+    } for
 } def

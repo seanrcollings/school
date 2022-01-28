@@ -1,3 +1,51 @@
-/foldAndCut {
+% The shape operator draws a shape assuming that the shape is drawn in a
+% 100 x 100 square.
+/shape {
+  1 dict begin
+    gsave
+      newpath
+        100 0 moveto
+        20 20 lineto
+        25 30 lineto
+        20 40 lineto
+        25 50 lineto
+        20 60 lineto
+        0  100 lineto
+        0 0 lineto
+        80 0 lineto
+      closepath
+      fill
+      stroke
+    grestore
+  end
+} def
 
+
+/foldAndCut {
+    % Create a local scope to hold fold, took me way too long to realize this :(
+    1 dict begin
+        /folds exch def
+
+        folds 0 eq
+        {
+            shape
+        }
+        {
+            gsave
+                50 50 translate
+                .5 .5 scale
+
+                folds 1 sub foldAndCut
+                -1 1 scale
+                folds 1 sub foldAndCut
+
+                1 -1 scale
+                folds 1 sub foldAndCut
+
+                -1 1 scale
+                folds 1 sub foldAndCut
+            grestore
+        }
+        ifelse
+    end
 } def
