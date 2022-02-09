@@ -1,23 +1,23 @@
-from doctest import Example
-import string
+import argparse
 import os
+import logging
 
-PATH = "./"
+
+logger = logging.getLogger()
 
 
-def runProgram(fileName="code.lsp", trace=False):
+def runProgram(fileName="code.lsp"):
     # reads the code in file name, parses it, executes each statement
-    Trace = trace
     program = readInFile(fileName)
     # parse the string into a list of lists
     codeList = parseProgram(program)
-    evalProgram(codeList, trace=trace)
+    evalProgram(codeList)
 
 
 def readInFile(fileName):
     # reads in a lisp program, returns as one big string
-    print("Reading %s" % (PATH + fileName,))
-    with open(PATH + fileName, "r") as file:  # ignore comment lines
+    logger.info("Reading %s", fileName)
+    with open(fileName, "r") as file:  # ignore comment lines
         lines = [l for l in file.readlines() if not l[0] == "#"]
     whole = ""
     for line in lines:
@@ -60,10 +60,8 @@ def createCode(tokenList):
 #######################################################################################################################
 ###### semantics
 #######################################################################################################################
-def evalProgram(codeList, trace=True):
+def evalProgram(codeList):
     # top call, evaluates a list of parsed statements
-    global Trace
-    Trace = trace
     evalLispBlock(codeList, {}, [])
 
 
@@ -72,11 +70,14 @@ def evalLisp(code, bindings=[], depth=0):
     # bindings is a list of dictionaries, each with a mapping from a symbol
     # to its value. These are generated from def statements, and when
     # a user-defined function is called
-    if Trace or depth == 0:
-        print("%sEval %s" % ("|  " * depth, str(code)))
+    if depth == 0:
+        output = logger.info
+    else:
+        output = logger.debug
+
+    output("%sEval %s" % ("|  " * depth, str(code)))
     answer = evalLispHelp(code, bindings, depth)
-    if Trace or depth == 0:
-        print("%sAns  %s " % ("|  " * depth, str(answer)))
+    output("%sAns  %s " % ("|  " * depth, str(answer)))
     return answer
 
 
@@ -178,8 +179,7 @@ def simpleEqual(a, b):
 
 def evalLispFun(funName, args, bindings, depth):
     # Execute a user defined function
-    if Trace:
-        print("|  " * depth + "Calling function %s" % (funName,))
+    logger.debug("|  " * depth + "Calling function %s" % (funName,))
     # lookup the function definition in bindings
     (params, block) = findValue(funName, bindings, depth)
     # create a new binding to hold local variables from parmeters, sets and defs
@@ -188,11 +188,10 @@ def evalLispFun(funName, args, bindings, depth):
     for (oneParam, oneExpression) in zip(params, args):
         value = evalLisp(oneExpression, bindings, depth + 1)
         oneBinding[oneParam] = value
-        if Trace:
-            print(
-                "|  " * depth
-                + "Create parameter-value binding: %s = %s" % (oneParam, value)
-            )
+        logger.debug(
+            "|  " * depth
+            + "Create parameter-value binding: %s = %s" % (oneParam, value)
+        )
     # work through each statement in block
     return evalLispBlock(block, oneBinding, bindings, depth=depth + 1)
 
@@ -214,28 +213,25 @@ def evalLispBlock(block, oneBinding, bindings, depth=0):
 
         if code[0] == "set":
             # map the name of the variable to the eval of value
-            if Trace:
-                print(
-                    "|  " * depth + "Evaluating set %s = %s" % (code[1], str(code[2]))
-                )
+            logger.debug(
+                "|  " * depth + "Evaluating set %s = %s", code[1], str(code[2])
+            )
             value = evalLisp(code[2], [oneBinding] + bindings, depth + 1)
             oneBinding[code[1]] = value
-            if Trace:
-                print(
-                    "|  " * depth
-                    + "Create set variable binding: %s = %s" % (code[1], value)
-                )
+            logger.debug(
+                "|  " * depth + "Create set variable binding: %s = %s", code[1], value
+            )
             # keep going through the block
             return evalLispBlock(block[1:], oneBinding, bindings, depth=depth)
 
         elif code[0] == "defun":  # put mapping from name to arguments, block
             oneBinding[code[1]] = (code[2], code[3:])
-            if Trace:
-                print(
-                    "|  " * depth
-                    + "Create function binding: %s = [%s, %s]"
-                    % (code[1], str(code[2]), str(code[3:]))
-                )
+            logger.debug(
+                "|  " * depth + "Create function binding: %s = [%s, %s]",
+                code[1],
+                str(code[2]),
+                str(code[3:]),
+            )
             # keep working through block
             return evalLispBlock(block[1:], oneBinding, bindings, depth=depth)
 
@@ -253,13 +249,12 @@ def findValue(name, bindings, depth):
     # recent first, search up the bindings seeing if this variable is in
     # one of the dictionaries
     if bindings == []:  # have not found the value
-        print("NO Value %s" % name)
+        logger.info("NO Value %s" % name)
     if name in bindings[0]:  # found its value
-        if Trace:
-            print("|  " * depth + "Found Value of %s as %s" % (name, bindings[0][name]))
+        logger.debug("|  " * depth + "Found Value of %s as %s", name, bindings[0][name])
         return bindings[0][name]
-    if Trace:
-        print("|  " * depth + "Looking for %s" % (name,))
+
+    logger.debug("|  " * depth + "Looking for %s", name)
     return findValue(name, bindings[1:], depth)
 
 
@@ -273,22 +268,42 @@ def toString(code):
     return string + ")"
 
 
-def repl(trace=False):
-    # reads the code in file name, parses it, executes each statement
-    Trace = trace
+def repl():
+    # SUPER Simple single-line repl
     while True:
-        line = input(">>> ")
-        # parse the string into a list of lists
         try:
+            line = input(">>> ")
+            if line == "exit":
+                break
             codeList = parseProgram(line)
-            evalProgram(codeList, trace=trace)
+            evalProgram(codeList)
         except Exception as e:
             print(e)
 
 
-########################################################################################################################
-fileName = "code.lsp"
-# print(readInProgram(fileName))
-# runProgram(fileName, True)
-# runProgram(fileName, True)
-repl()
+def main(file, trace):
+    logging.basicConfig(
+        level=[logging.INFO, logging.DEBUG][trace],
+        format="%(message)s",
+    )
+
+    if not file:
+        repl()
+        return
+
+    if not os.path.isfile(file):
+        raise ValueError(f"{file} is not a valid filepath")
+
+    runProgram(file)
+
+
+parser = argparse.ArgumentParser(description="Lisp interpreter written in Python.")
+parser.add_argument(
+    "file",
+    nargs="?",
+    help="the source file to execute. If no file is given, will open in repl mode",
+)
+parser.add_argument("-t", "--trace", action="store_true", help="enable traceback")
+args = parser.parse_args()
+
+main(args.file, args.trace)
