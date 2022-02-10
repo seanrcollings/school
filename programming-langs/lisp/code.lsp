@@ -85,34 +85,41 @@
 
 
 (defun select (list start end)
+    (selectHelper list start (- end start)))
 
-)
+(defun selectHelper (list start count)
+    (if (eq count 0)
+        nil
+        (if (eq 0 start)
+            (cons (first list) (selectHelper (rest list) start (- count 1)))
+            (selectHelper (rest list) (- start 1) count))))
 
 (select (quote (0 1 2 3 4 5 6 7 8 )) 0 (/ (length (quote (0 1 2 3 4 5 6 7 8 ))) 2 ))
-(select (quote (0 1 2 3 4 5 6 7 8 )) (/ (length (quote (0 1 2 3 4 5 6 7 8 ))) 2 ) (length (quote (0 1 2 3 4 5 6 7 8 ))))
+(select (quote (0 1 2 3 4 5 6 7 8 )) (/ (length (quote (0 1 2 3 4 5 6 7 8 ))) 2 )(length (quote (0 1 2 3 4 5 6 7 8 ))))
 
 (defun merge (list0 list1)
-    (if (eq list0 nil)
+    (if (and (eq list0 nil) (eq list1 nil))
         nil
-        (if (< (first list0) (first list1))
-        (cons (first list1) (cons (first list0) (merge (rest list0) (rest list1))))
-        (cons (first list0) (cons (first list1) (merge (rest list0) (rest list1)))))))
-
+        (if (eq list0 nil)
+            list1
+            (if (eq list1 nil)
+                list0
+                (if (< (first list0) (first list1))
+                    (cons (first list0) (merge (rest list0) list1))
+                    (cons (first list1) (merge list0 (rest list1))))))))
 
 (defun mergeSort (list)
-    (if (eq list nil)
-        nil
+    (if (or (eq (length list) 1) (eq list nil))
+        list
         (merge
-            (mergeSort (select 0 (/ (length list) 2))
-            (mergeSort (select (+ (/ (length list) 2) 1) (length list))))
-        )
-    )
-)
+            (mergeSort (select list 0 (/ (length list) 2)))
+            (mergeSort (select list (/ (length list) 2) (length list))))))
 
 (mergeSort nil )
 (mergeSort (quote (1 )))
 (mergeSort (quote (4 3 1 )))
 (mergeSort (quote (6 3 2 1 5 7 10 )))
+(mergeSort (quote (10 9 8 7 6 5 4 3 2 1 )))
 
 (defun countThrows (dice target)
     (if (eq dice 0)

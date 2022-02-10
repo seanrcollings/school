@@ -110,7 +110,7 @@ def evalLispHelp(code, bindings, depth):
             code[2], bindings, depth + 1
         )
     if fun == "/":
-        return evalLisp(code[1], bindings, depth + 1) / evalLisp(
+        return evalLisp(code[1], bindings, depth + 1) // evalLisp(
             code[2], bindings, depth + 1
         )
     # control functions
