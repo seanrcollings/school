@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Hello wasm-pack!</title>
+  <style>
+    body {
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    #results-screen {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.774);
+      border: 1px solid grey;
+      width: 400px;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+  <div id="fps"></div>
+  <h2>
+    SCORE:
+    <span class="score"></span>
+  </h2>
+  <div id="results-screen">
+    <h1>You Died!</h1>
+    <h2>Final Score: <span class="score"></span></h2>
+    <button id="restart">Replay</button>
+  </div>
+  <canvas id="game-of-life-canvas"></canvas>
+  <script src="./bootstrap.js"></script>
+</body>
+
+</html>
