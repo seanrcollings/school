@@ -225,7 +225,7 @@ impl Universe {
                 self.cells[index] = Cell::Dead;
                 self.snake.advance_tail();
             }
-            Cell::Alive => self.restart(),
+            Cell::Alive => return false,
         };
 
         return true;
