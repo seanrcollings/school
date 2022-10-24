@@ -26,15 +26,15 @@ module Consumer
     private
 
     def process_create(request)
-      false
+      true
     end
 
     def process_update(request)
-      false
+      true
     end
 
     def process_delete(request)
-      false
+      true
     end
 
   end
@@ -53,11 +53,11 @@ module Consumer
     end
 
     def process_update(request)
-      false
+      true
     end
 
     def process_delete(request)
-      false
+      true
     end
 
     def bucket
@@ -85,11 +85,11 @@ module Consumer
     end
 
     def process_update(request)
-      false
+      true
     end
 
     def process_delete(request)
-      false
+      true
     end
 
     def client
