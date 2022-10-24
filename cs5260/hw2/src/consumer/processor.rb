@@ -5,12 +5,13 @@ require_relative '../widgets'
 module Consumer
   class Processor
 
-    def initialize(location)
+    def initialize(location, logger)
       @location = location
+      @logger = logger
     end
 
     def process(request)
-      puts "Process #{request.type} request #{request.request_id}"
+      @logger.info "Process #{request.type} request #{request.request_id}"
 
       case request.type
       when 'create'

@@ -2,9 +2,10 @@ require 'pry'
 
 module Consumer
   class Poller
-    def initialize(retriever, processor)
+    def initialize(retriever, processor, logger)
       @retriever = retriever
       @processor = processor
+      @logger = logger
     end
 
     def execute(wait: 0.1)

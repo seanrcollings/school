@@ -7,8 +7,9 @@ require_relative '../widgets'
 
 module Consumer
   class Retriever
-    def initialize(location)
+    def initialize(location, logger)
       @location = location
+      @logger = logger
     end
 
     def get(limit: 1, &blk)
@@ -39,9 +40,11 @@ module Consumer
         next if body.nil? || body.empty?
 
         begin
-          Widgets::WidgetRequest.from_json(body)
+          request = Widgets::WidgetRequest.from_json(body)
+          @logger.info "Recieved request: #{request.request_id}"
+          request
         rescue JSON::Schema::ValidationError => e
-          STDERR.puts e
+          @logger.error e
           # So the retriever doesn't get hung up on
           # invalid objects, delete them when we run into them
           delete_objects([obj.key])
