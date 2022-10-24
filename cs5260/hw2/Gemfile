@@ -13,3 +13,5 @@ gem "rspec", "~> 3.11", :group => :dev
 gem "nokogiri", "~> 1.13"
 
 gem "pry", "~> 0.14.1"
+
+gem "json-schema", "~> 3.0"

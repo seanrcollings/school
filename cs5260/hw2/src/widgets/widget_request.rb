@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json-schema'
+
 # https://stackoverflow.com/questions/8706930
 def to_snake_case(string)
   string.gsub(/::/, '/')
@@ -10,40 +12,99 @@ def to_snake_case(string)
 end
 
 module Widgets
-  class WidgetRequest
-    attr_accessor :request_id, :widget_id, :owner, :type
+  WIDGET_SCHEMA = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "pattern": "create|update|delete"
+      },
+      "requestId": {
+        "type": "string"
+      },
+      "widgetId": {
+        "type": "string"
+      },
+      "owner": {
+        "type": "string",
+        "pattern": "[A-Za-z ]+"
+      },
+      "label": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "otherAttributes": {
+        "type": "array",
+        "items": [
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ]
+          }
+        ]
+      }
+    },
+    "required": [
+      "type",
+      "requestId",
+      "widgetId",
+      "owner"
+    ]
+  }.freeze
 
-    def initialize(type:, request_id:, widget_id:, owner:)
-      @type = type
+  class WidgetRequest
+    attr_accessor :request_id, :widget_id, :owner
+
+    def initialize(request_id:, widget_id:, owner:)
       @request_id = request_id
       @widget_id = widget_id
       @owner = owner
     end
 
-    def self.create(type:, **kwargs)
+    def self.create(type:, **data)
       case type
       when 'create'
-        CreateWidgetRequest.new(type: type, **kwargs)
+        CreateWidgetRequest.new(**data)
       when 'update'
-        UpdateWidgetRequest.new(type: type, **kwargs)
+        UpdateWidgetRequest.new(**data)
       when 'delete'
-        DeleteWidgetRequet.new(type: type, **kwargs)
+        DeleteWidgetRequest.new(**data)
       else
         nil
       end
     end
 
     def self.from_json(json)
-      json = json.transform_keys { |k| to_snake_case(k).to_sym }
-      WidgetRequest.create(**json)
+      raise 'Cannot pass empty string' if json.empty?
+      data = JSON.parse(json)
+      JSON::Validator.validate!(WIDGET_SCHEMA, data)
+      data = data.transform_keys { |k| to_snake_case(k).to_sym }
+      WidgetRequest.create(**data)
+    end
+
+    def type
+      return self.class::TYPE
     end
 
     def to_h
       {
-        type: type,
-        requestId: request_id,
-        widgetId: widget_id,
-        owner: owner
+        "type" => type,
+        "requestId" => request_id,
+        "widgetId" => widget_id,
+        "owner" => owner
       }
     end
 
@@ -55,6 +116,7 @@ module Widgets
   class CreateWidgetRequest < WidgetRequest
     attr_accessor :label, :description, :attributes
 
+    TYPE = 'create'.freeze
 
     def initialize(label: nil, description: nil, other_attributes: nil, **kwargs)
       @label = label
@@ -66,9 +128,9 @@ module Widgets
     def to_h
       super.merge(
         {
-          label: label,
-          description: description,
-          otherAttributes: attributes
+          "label" => label,
+          "description" => description,
+          "otherAttributes" => attributes
         }
       )
     end
@@ -77,6 +139,7 @@ module Widgets
   class UpdateWidgetRequest < WidgetRequest
     attr_accessor :label, :description, :attributes
 
+    TYPE = 'update'.freeze
 
     def initialize(label: nil, description: nil, other_attributes: nil, **kwargs)
       @label = label
@@ -88,14 +151,15 @@ module Widgets
     def to_h
       super.merge(
         {
-          label: label,
-          description: description,
-          otherAttributes: attributes
+          "label" => label,
+          "description" => description,
+          "otherAttributes" => attributes
         }
       )
     end
   end
 
-  class DeleteWidgetRequet < WidgetRequest
+  class DeleteWidgetRequest < WidgetRequest
+    TYPE = 'delete'.freeze
   end
 end
