@@ -10,7 +10,7 @@ module Consumer
       @location = location
     end
 
-    def get(**kwargs, &blk)
+    def get(limit: 1, &blk)
       raise 'Not Implemented!'
     end
 

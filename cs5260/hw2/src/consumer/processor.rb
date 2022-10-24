@@ -10,14 +10,6 @@ module Consumer
     end
 
     def process(request)
-      raise "Not implemented!"
-    end
-  end
-
-  class S3Processor < Processor
-    S3 = Aws::S3::Resource.new(region: 'us-east-1')
-
-    def process(request)
       puts "Process #{request.type} request #{request.request_id}"
 
       case request.type
@@ -29,6 +21,25 @@ module Consumer
         process_delete(request)
       end
     end
+
+    private
+
+    def process_create(request)
+      false
+    end
+
+    def process_update(request)
+      false
+    end
+
+    def process_delete(request)
+      false
+    end
+
+  end
+
+  class S3Processor < Processor
+    S3 = Aws::S3::Resource.new(region: 'us-east-1')
 
     private
 
@@ -55,26 +66,34 @@ module Consumer
 
 
   class DynamoDBProcessor < Processor
-    def process(request)
-      puts "process request"
-    end
 
     private
 
     def process_create(request)
-      # stub
+      item = request.to_h
+      id = item.delete(:widgetId)
+      item['id'] = id
+      attributes = item.delete(:otherAttributes) || []
+      item = item.merge(attributes.map { |a| [a["name"], a["value"]] }.to_h )
+
+
+      client.put_item(
+        table_name: @location,
+        item: item,
+      )
+      true
     end
 
     def process_update(request)
-      # stub
+      false
     end
 
     def process_delete(request)
-      # stub
+      false
     end
 
-    def bucket
-      @bucket ||= S3.bucket(@location)
+    def client
+      @client ||= Aws::DynamoDB::Client.new(region: 'us-east-1')
     end
   end
 end
