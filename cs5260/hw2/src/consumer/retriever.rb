@@ -1,8 +1,9 @@
 require 'json'
 require 'aws-sdk'
+require 'json-schema'
 require 'pry'
 
-require_relative "../widgets"
+require_relative '../widgets'
 
 module Consumer
   class Retriever
@@ -37,8 +38,15 @@ module Consumer
         body = obj.get[:body].string
         next if body.nil? || body.empty?
 
-        data = JSON.parse(body)
-        Widgets::WidgetRequest.from_json(data)
+        begin
+          Widgets::WidgetRequest.from_json(body)
+        rescue JSON::Schema::ValidationError => e
+          STDERR.puts e
+          # So the retriever doesn't get hung up on
+          # invalid objects, delete them when we run into them
+          delete_objects([obj.key])
+          nil
+        end
       end
 
       # Yield a block, so we can decide whether or not to delete

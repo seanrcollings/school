@@ -1,15 +1,16 @@
+require "bundler/setup"
 require 'thor'
 
 require_relative "../src/consumer"
 
 module Consumer
   class CLI < Thor
-    desc "execute", 'execute the program'
-    option :sbucket
-    option :dservice
-    option :destination
+    desc "consumer", 'execute the consumer program'
+    option :sbucket, desc: "The source S3 bucket name"
+    option :dservice, desc: "The service of the destination, either s3 or dynamoddb"
+    option :destination, desc: "The name of the destination bucket or table"
 
-    def execute
+    def consumer
       case options[:dservice]
       when 's3'
         processor = Consumer::S3Processor.new(options[:destination])

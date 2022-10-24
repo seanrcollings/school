@@ -76,7 +76,6 @@ module Consumer
       attributes = item.delete(:otherAttributes) || []
       item = item.merge(attributes.map { |a| [a["name"], a["value"]] }.to_h )
 
-
       client.put_item(
         table_name: @location,
         item: item,
