@@ -1,5 +1,7 @@
 require 'json'
 require 'aws-sdk'
+require 'logger'
+require 'stringio'
 require_relative '../../src/consumer'
 require_relative '../../src/widgets'
 
@@ -14,7 +16,7 @@ describe Consumer do
 
       stub_const("Consumer::S3Retriever::S3", Aws::S3::Resource.new(client: @client))
 
-      @retriever = Consumer::S3Retriever.new('bucket-name')
+      @retriever = Consumer::S3Retriever.new('bucket-name', Logger.new(StringIO.new))
     end
 
     describe '#get' do

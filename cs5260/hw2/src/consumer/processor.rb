@@ -1,6 +1,7 @@
 require 'aws-sdk'
-
+require 'pry'
 require_relative '../widgets'
+
 
 module Consumer
   class Processor
@@ -23,8 +24,6 @@ module Consumer
       end
     end
 
-    private
-
     def process_create(request)
       true
     end
@@ -36,13 +35,10 @@ module Consumer
     def process_delete(request)
       true
     end
-
   end
 
   class S3Processor < Processor
     S3 = Aws::S3::Resource.new(region: 'us-east-1')
-
-    private
 
     def process_create(request)
       bucket.put_object(
@@ -68,14 +64,8 @@ module Consumer
 
   class DynamoDBProcessor < Processor
 
-    private
-
     def process_create(request)
-      item = request.to_h
-      id = item.delete(:widgetId)
-      item['id'] = id
-      attributes = item.delete(:otherAttributes) || []
-      item = item.merge(attributes.map { |a| [a["name"], a["value"]] }.to_h )
+      item = request_to_item(request)
 
       client.put_item(
         table_name: @location,
@@ -90,6 +80,15 @@ module Consumer
 
     def process_delete(request)
       true
+    end
+
+    def request_to_item(request)
+      item = request.to_h
+      id = item.delete("widgetId")
+      item['id'] = id
+      attributes = item.delete("otherAttributes") || []
+      item.delete('type')
+      item.merge(attributes.map { |a| [a["name"], a["value"]] }.to_h )
     end
 
     def client
