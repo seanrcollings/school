@@ -38,6 +38,3 @@ describe Widgets::WidgetRequest do
     end
   end
 end
-
-
-
