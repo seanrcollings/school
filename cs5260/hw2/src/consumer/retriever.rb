@@ -1,7 +1,6 @@
 require 'json'
 require 'aws-sdk'
 require 'json-schema'
-require 'pry'
 
 require_relative '../widgets'
 
@@ -44,7 +43,7 @@ module Consumer
           @logger.info "Recieved request: #{request.request_id}"
           request
         rescue JSON::Schema::ValidationError => e
-          @logger.error e
+          @logger.error e.to_s
           # So the retriever doesn't get hung up on
           # invalid objects, delete them when we run into them
           delete_objects([obj.key])
