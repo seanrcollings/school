@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+# gem "rails"
+
+gem "aws-sdk", "~> 3.1"
+
+gem "thor", "~> 1.2"
+
+gem "rspec", "~> 3.11", :group => :dev
+
+gem "nokogiri", "~> 1.13"
+
+gem "pry", "~> 0.14.1"
+
+gem "json-schema", "~> 3.0"
+
+
+gem "byebug", "~> 11.1"
