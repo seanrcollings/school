@@ -102,7 +102,6 @@ module Consumer
       true
     end
 
-    private
 
     def request_to_item(request)
       item = request.to_h
@@ -112,6 +111,8 @@ module Consumer
       item.delete('type')
       item.merge(attributes.map { |a| [a["name"], a["value"]] }.to_h )
     end
+
+    private
 
     def table
       @resource ||= Aws::DynamoDB::Resource.new(region: 'us-east-1')

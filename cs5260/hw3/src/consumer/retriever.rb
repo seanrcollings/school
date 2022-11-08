@@ -1,4 +1,3 @@
-require 'byebug'
 require 'json'
 require 'aws-sdk'
 require 'json-schema'
@@ -93,6 +92,7 @@ module Consumer
 
       requests = messages.filter_map do |message|
         body = message.body
+        next if body.nil? || body.empty?
 
         begin
           request = Widgets::WidgetRequest.from_json(body)
@@ -103,7 +103,7 @@ module Consumer
           @logger.error e.to_s
           # So the retriever doesn't get hung up on
           # invalid objects, delete them when we run into them
-          # delete_messages(messages.map {|m| { id: m.message_id, receipt_handle: m.receipt_handle } })
+          delete_messages({ id: message.message_id, receipt_handle: message.receipt_handle })
           nil
         end
       end
