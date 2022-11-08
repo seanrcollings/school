@@ -45,6 +45,7 @@ module Consumer
         key: "widgets/#{request.owner}/#{request.widget_id}",
         body: request.to_json,
       )
+
       true
     end
 
@@ -53,6 +54,7 @@ module Consumer
         key: key(request),
         body: request.to_json,
       )
+
       true
     end
 
@@ -60,6 +62,7 @@ module Consumer
       bucket.delete_objects(delete: {
         objects: [ { key: key(request) } ]
       })
+
       true
     end
 
@@ -79,15 +82,15 @@ module Consumer
 
     def process_create(request)
       item = request_to_item(request)
-
       table.put_item(item: item)
+
       true
     end
 
     def process_update(request)
       item = request_to_item(request)
-
       table.put_item(item: item)
+
       true
     end
 
@@ -95,6 +98,8 @@ module Consumer
       resource.delete_item(
         key: { "id" => request.widget_id },
       )
+
+      true
     end
 
     private
