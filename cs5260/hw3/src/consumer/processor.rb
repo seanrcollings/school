@@ -22,6 +22,10 @@ module Consumer
       when 'delete'
         process_delete(request)
       end
+
+    rescue Excetion => e
+      @logger.error e.to_s
+      false
     end
 
     def process_create(request)
