@@ -2,3 +2,4 @@
 .precomp
 *.jar
 .byebug_history
+*.env
