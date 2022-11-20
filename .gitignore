@@ -3,3 +3,4 @@
 *.jar
 .byebug_history
 *.env
+__pycache__

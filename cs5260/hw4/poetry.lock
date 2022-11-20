@@ -29,6 +29,17 @@ s3transfer = ">=0.6.0,<0.7.0"
 crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
+name = "boto3-mocking"
+version = "0.1.1"
+description = "Simplify mocking AWS access through boto3"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+boto3 = "*"
+
+[[package]]
 name = "boto3-stubs"
 version = "1.26.13"
 description = "Type annotations for boto3 1.26.13 generated with mypy-boto3-builder 7.11.11"
@@ -611,11 +622,12 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "731239294345db2e151fb172443265997d108299a72e5962822d1f3845c4ac87"
+content-hash = "83db9263d93091f9e317da1c50a32077414712f91109383416712fed397bbf00"
 
 [metadata.files]
 attrs = []
 boto3 = []
+boto3-mocking = []
 boto3-stubs = []
 botocore = []
 botocore-stubs = []
