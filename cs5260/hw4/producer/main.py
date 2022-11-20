@@ -1,5 +1,6 @@
 import typing as t
 import os
+import logging
 
 from producer import response
 from producer import widget
@@ -21,9 +22,11 @@ class LambdaContext(t.Protocol):
 
 
 def handle(event: t.Dict[str, t.Any], context: LambdaContext):
+    logging.info("Recieved request")
     try:
         queue_url = os.getenv("SQS_URL")
         if not queue_url:
+            logging.error("no queue configuration")
             return response.error({"error": "no queuue configured"})
 
         handler = SQSHandler(queue_url)
@@ -33,6 +36,8 @@ def handle(event: t.Dict[str, t.Any], context: LambdaContext):
 
         widget_request = widget.WidgetRequest.from_json(body)
         handler.handle(widget_request)
+        logging.info("Created request successfully")
         return response.ok({"success": True})
     except errors.RequestError as e:
+        logging.error(e.message)
         return response.error({"error": e.message}, e.code)
