@@ -7,6 +7,9 @@ from producer import widget
 from producer import errors
 from producer.handler import SQSHandler
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 
 class LambdaContext(t.Protocol):
     function_name: str
@@ -22,7 +25,7 @@ class LambdaContext(t.Protocol):
 
 
 def handle(event: t.Dict[str, t.Any], context: LambdaContext):
-    logging.info("Recieved request")
+    logging.info(f"Recieved event {event}")
     try:
         queue_url = os.getenv("SQS_URL")
         if not queue_url:

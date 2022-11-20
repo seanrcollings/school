@@ -1,7 +1,7 @@
 import pytest
 import os
 import json
-from producer import handle
+from lambda_function import handle
 import boto3_mocking  # type: ignore
 
 boto3_mocking.engage_patching()
