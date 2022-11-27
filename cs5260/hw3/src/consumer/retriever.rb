@@ -120,7 +120,7 @@ module Consumer
 
       if @cache.empty?
         get(amount: amount) do |messages|
-          @cache.concat(messages)
+          @cache.concat(messages.reverse)
           false
         end
       end
