@@ -1,3 +1,6 @@
 [submodule "deep-learning/STAT-6685"]
 	path = deep-learning/STAT-6685
 	url = git@github.com:KevinMoonLab/STAT-6685.git
+[submodule "deep-learning/final_project"]
+	path = deep-learning/final_project
+	url = git@github.com:5810FinalProject/final_project.git
