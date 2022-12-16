@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">tree</string>
+    <string name="generate_button">GENERATE TREE</string>
+</resources>

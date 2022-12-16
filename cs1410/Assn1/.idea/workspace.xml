@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f56ac7c4-8a06-4b6f-baa5-6b5b73cc6016" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="printScope" value="1" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
+  </component>
+  <component name="ProjectId" id="1W86PABz58jSDtz44aSPXbWnSj3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f56ac7c4-8a06-4b6f-baa5-6b5b73cc6016" name="Default Changelist" comment="" />
+      <created>1578518847187</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578518847187</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="530" y="194" width="535" height="557" key="#Unnamed" timestamp="1578520292471">
+      <screen x="0" y="30" width="1600" height="870" />
+    </state>
+    <state x="530" y="194" width="535" height="557" key="#Unnamed/0.30.1600.870@0.30.1600.870" timestamp="1578520292471" />
+    <state x="262" y="110" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579110764209">
+      <screen x="0" y="30" width="1600" height="870" />
+    </state>
+    <state x="262" y="110" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.30.1600.870@0.30.1600.870" timestamp="1579110764209" />
+    <state x="653" y="362" width="290" height="221" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1578936930218">
+      <screen x="0" y="30" width="1600" height="870" />
+    </state>
+    <state x="653" y="362" width="290" height="221" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.30.1600.870@0.30.1600.870" timestamp="1578936930218" />
+    <state x="586" y="228" width="424" height="489" key="FileChooserDialogImpl" timestamp="1578519034946">
+      <screen x="0" y="30" width="1600" height="870" />
+    </state>
+    <state x="586" y="228" width="424" height="489" key="FileChooserDialogImpl/0.30.1600.870@0.30.1600.870" timestamp="1578519034946" />
+    <state x="495" y="291" key="com.intellij.ide.util.TipDialog" timestamp="1579717673436">
+      <screen x="0" y="30" width="1600" height="870" />
+    </state>
+    <state x="495" y="291" key="com.intellij.ide.util.TipDialog/0.30.1600.870@0.30.1600.870" timestamp="1579717673436" />
+    <state x="192" y="83" width="1211" height="779" key="new project wizard" timestamp="1578519208366">
+      <screen x="0" y="30" width="1600" height="870" />
+    </state>
+    <state x="192" y="83" width="1211" height="779" key="new project wizard/0.30.1600.870@0.30.1600.870" timestamp="1578519208366" />
+    <state x="464" y="208" key="run.anything.popup" timestamp="1578539619032">
+      <screen x="0" y="30" width="1600" height="870" />
+    </state>
+    <state x="464" y="208" key="run.anything.popup/0.30.1600.870@0.30.1600.870" timestamp="1578539619032" />
+    <state x="463" y="215" width="672" height="678" key="search.everywhere.popup" timestamp="1578540840178">
+      <screen x="0" y="30" width="1600" height="870" />
+    </state>
+    <state x="463" y="215" width="672" height="678" key="search.everywhere.popup/0.30.1600.870@0.30.1600.870" timestamp="1578540840178" />
+  </component>
+</project>

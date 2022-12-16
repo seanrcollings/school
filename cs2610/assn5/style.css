@@ -1,0 +1,56 @@
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+.container {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #333;
+  color: white;
+  margin: 10px;
+}
+
+.location {
+  background-color: #222;
+}
+
+.forecast {
+  background-color: powderblue;
+  padding: 15px;
+}
+
+.current-weather {
+  background-color: slateblue;
+}
+.forecast-likely {
+  background-color: rgb(25, 114, 25);
+}
+
+.forecast-unlikely {
+  background-color: rgb(189, 58, 58);
+}
+
+.forecast-neutral {
+  background-color: #333;
+}
+
+ul {
+  list-style: none;
+}
+
+.sums > span {
+  margin-left: 10px;
+}
+
+.sums-unlikely {
+  color: rgb(189, 58, 58);
+}
+
+.sums-neutral {
+  color: gray;
+}
+
+.sums-likely {
+  color: rgb(25, 114, 25);
+}

@@ -1,0 +1,9 @@
+Assign6.java
+ Assign6
+ BeladyAnomoly
+TaskFIFO.java
+ TaskFIFO
+TaskMRU.java
+ TaskMRU
+TaskLRU.java
+ TaskLRU

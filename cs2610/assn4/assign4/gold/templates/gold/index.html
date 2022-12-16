@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worth your weight in gold</title>
+  {% load static %}
+
+  <link rel="stylesheet" href="{% static 'gold/styles.css' %}">
+  <script src="{% static 'gold/index.js' %}"></script>
+</head>
+
+<body>
+  <h2>Worth you weight in Gold</h2>
+  <p id="goldValue">Please wait...</p>
+  <form id="calculate">
+    <label for="weight">
+      Please enter your weight
+      <input type="number" id="weight" name="weight">
+      <span id="error"></span>
+    </label>
+    <label for="unit">
+      <select name="unit" id="unit">
+        <option value="kg">Kilograms</option>
+        <option value="oz">Ounces</option>
+        <option value="lb">Pounds</option>
+        <option value="g">Grams</option>
+        <option value="T">Tons</option>
+        <option value="t_oz">Troy Ounces</option>
+      </select>
+    </label>
+    <button type="submit" disabled id="submit">Calculate</button>
+  </form>
+  <div id="results">
+
+  </div>
+</body>
+
+</html>

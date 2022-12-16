@@ -1,0 +1,32 @@
+30
+0 Okuta 1 3 
+1 Shaki 2 
+2 Iseyin 3 5 
+3 Kishi 8 
+4 Ogbomosho 8 5 
+5 Ibadan 9 6 10 
+6 IjebuOde 7 13 
+7 Lagos 
+8 Ilorin 11 9 
+9 Oshogbo 10 
+10 Akure 12 17 
+11 Bida 15 
+12 Owo 13 
+13 BeninCity 18 14 
+14 PortHarcourt 20 
+15 Abuja 22 16 
+16 Abaji 22 17 
+17 Lokoja 29 25 
+18 Onitsha 23 19 
+19 Owerri 20 
+20 Aba 21 24 25 
+21 Uyo 
+22 Keffi 26 
+23 Awka 25 
+24 Calabar 
+25 Enugu 28 
+26 Lafia 27 
+27 Makurdi 29 
+28 Abakaliki 29 
+29 Gboko 
+

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@next"></script>
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="title container">
+      <h1>Vue.JS Weather App</h1>
+    </div>
+    <div class="location container">
+      <h2>Your Location</h2>
+      <span v-if="location">
+        You are located in {{ location.city }}, {{ location.region_name }},
+        {{ location.country_name }}, at
+        coordinates ({{ location.latitude }}, {{ location.longitude}})
+      </span>
+      <h3 v-else>Loading...</h3>
+    </div>
+
+    <div class="current-weather container">
+      <h2>Current Conditions</h2>
+      <div v-if="weather">
+        <ul>
+          <li>Temperature: {{ weather.main.temp }} F</li>
+          <li>Min: {{ weather.main.temp_min }} F</li>
+          <li>Max: {{ weather.main.temp_max }} F</li>
+          <li>Humidity: {{ weather.main.humidity }}%</li>
+          <li>Pressure: {{ weather.main.pressure}} hPa</li>
+        </ul>
+      </div>
+      <h3 v-else>Loading...</h3>
+    </div>
+
+    <div class="forecast container">
+      <h2>5 day 3-hour forecast</h2>
+      <div v-if="forecast">
+        <div class="sums">
+          <span class="sums-unlikely">{{ unlikely}} Unlikely</span>
+          <span class="sums-neutral">{{ neutral }} Neutral</span>
+          <span class="sums-likely"> {{ likely }} Likely</span>
+        </div>
+        <weather v-for="item in forecast.list" :key="item" :item="item" :remove-from="removeFrom" :add-to="addTo">
+        </weather>
+      </div>
+      <h3 v-else>Loading...</h3>
+    </div>
+  </div>
+
+</body>
+
+<script>
+  const ipStackKey = 'f330702fff1de6ce27d87250cacced6d';
+  const openWeatherKey = 'd3927fd6f80f9e71c4fc0dc8247983cc';
+
+  var vm = Vue.createApp({
+    data() {
+      return {
+        location: undefined,
+        weather: undefined,
+        forecast: undefined,
+        unlikely: 0,
+        likely: 0,
+        neutral: 0,
+      }
+    },
+
+    methods: {
+      addTo(field) {
+        this[field] += 1;
+      },
+      removeFrom(field) {
+        this[field] -= 1
+      }
+
+    },
+
+    created() {
+      fetch(`http://api.ipstack.com/check?access_key=${ipStackKey}`)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json)
+          this.location = json;
+          return fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${json.latitude}&lon=${json.longitude}&units=imperial&appid=${openWeatherKey}`)
+        })
+        .then(res => res.json())
+        .then(json => {
+          console.log(json)
+          this.weather = json
+          return fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${json.coord.lat}&lon=${json.coord.lon}&units=imperial&appid=${openWeatherKey}`)
+        })
+        .then(res => res.json())
+        .then(json => {
+          console.log(json)
+          this.forecast = json
+          this.neutral = json.list.length
+        })
+    },
+  })
+
+
+  vm.component('weather', {
+    data() {
+      return {
+        states: ["neutral", "unlikely", "likely"],
+        currentState: 0,
+      }
+    },
+    props: ["item", "addTo", "removeFrom"],
+
+    methods: {
+      changeState() {
+        const newState = this.currentState + 1 < this.states.length ? this.currentState + 1 : 0
+        this.removeFrom(this.state);
+        this.addTo(this.states[newState]);
+        this.currentState = newState;
+      }
+    },
+
+    computed: {
+      state() { return this.states[this.currentState]; },
+      classes() {
+        return {
+          container: true,
+          [`forecast-${this.state}`]: true
+        }
+      }
+    },
+
+    template: `
+      <div :class="classes" :onclick="changeState">
+        <h3>Conditions for {{ item.dt_txt}} </h3>
+        <ul>
+          <li>Temperature: {{ item.main.temp }} F</li>
+
+          <li v-for="weather in item.weather">{{ weather.description }} </li>
+          <li>Humidity: {{ item.main.humidity }}%</li>
+          <li>Pressure: {{ item.main.pressure }} hPa</li>
+        </ul>
+      </div>
+    `
+  })
+
+  vm.mount("#app")
+</script>
+
+</html>

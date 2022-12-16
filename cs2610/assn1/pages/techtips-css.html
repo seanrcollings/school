@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" style="margin: 0px;padding: 0px;font-family: Arial, Helvetica, sans-serif;font-size: 18px;">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Static Blog | Home</title>
+</head>
+
+<body
+  style="margin: 0px;padding: 0px;font-family: Arial, Helvetica, sans-serif;font-size: 18px;width: 100%;height: 100%;">
+  <div id="navigation" style="background-color: #333;">
+    <ul class="navigation-list" style="display: flex;list-style-type: none;margin: 0px;padding-left: 5px;">
+      <li class="navigation-item">
+        <a href="/"
+          style="padding: 0px 10px;display: inline-block;font-size: 30px;line-height: 50px;color: #eeeeee;text-decoration: none;height: 50px;transition: background-color 0.3s ease;">Home</a>
+      </li>
+      <li class="navigation-item">
+        <a href="/about"
+          style="padding: 0px 10px;display: inline-block;font-size: 30px;line-height: 50px;color: #eeeeee;text-decoration: none;height: 50px;transition: background-color 0.3s ease;">About</a>
+      </li>
+      <li class="navigation-item">
+        <a href="/techtips+css"
+          style="padding: 0px 10px;display: inline-block;font-size: 30px;line-height: 50px;color: #eeeeee;text-decoration: none;height: 50px;transition: background-color 0.3s ease;">Techtips
+          <span style="color: grey;font-size: 15px;font-style: italic;">(CSS)</span></a>
+      </li>
+      <li class="navigation-item">
+        <a href="/techtips-css"
+          style="padding: 0px 10px;display: inline-block;font-size: 30px;line-height: 50px;color: #eeeeee;text-decoration: none;height: 50px;transition: background-color 0.3s ease;">Techtips
+          <span style="color: grey;font-size: 15px;font-style: italic;">(No CSS)</span></a>
+      </li>
+    </ul>
+  </div> <!-- Navigation -->
+
+  <div id="content" style="color: rgb(43, 42, 42);width: 80%;margin: auto;padding-top: 20px;">
+    <h1>Cheatsheets</h1>
+    <div class="cheatsheet html-elements"
+      style="border-radius: 10px;border: 2px solid #333;margin: 10px 0px;padding: 5px;background-color: rgb(165, 62, 62);">
+      <h2>HTML Elements CheatSheet</h2>
+      <ol>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;html&gt;</code></h3>
+          Defines the body of the document, contains all the visible content of the document.
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: Block</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">lang="en"</code> </li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: should countain both a <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;head&gt;</code> and
+              <code style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;body&gt;</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;head&gt;</code></h3>
+          Container for metadata and should be the first child of the <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;html&gt;</code> tag
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: Neither</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: None</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;title&gt;</code>,
+              <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;style&gt;</code>,
+              <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;meta&gt;</code>,
+              <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;link&gt;</code>,
+              <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;script&gt;</code>,
+              and <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;base&gt;</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;link&gt;</code></h3>
+          Used to link external resources (like stylesheets) to you document, should be places in the
+          <code style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;head&gt;</code>
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: neither</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: rel, href</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: Empty tag</li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;title&gt;</code></h3>
+          Represents the title of the document (the name you'll see as the title to the tab).
+          Should be places in the <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;head&gt;</code>
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: neither</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: None</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: Plain Text</li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;style&gt;</code></h3>
+          Contains style information about the document in the from of CSS. Should be places in the
+          <code style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;head&gt;</code>
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: neither</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: None</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: Content should be valid CSS syntax</li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;body&gt;</code></h3>
+          Acts as the body of the document. All visible content should be placed within this tag. Should be the second
+          child of the <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;html&gt;</code> tag
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: Block</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: None</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: Flow Content</li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;h1&gt;</code></h3>
+          Denotse a top-level header for a section, there should be only one per page
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: Block</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: None</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: Phrasing Content</li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;div&gt;</code></h3>
+          Generic container fod dividing content.
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: Block</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: class, id</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: Flow Content</li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;p&gt;</code></h3>
+          Tag to represent a paragraph
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: Block</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: None</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: Phrasing Content</li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;ul&gt;</code></h3>
+          Represents an unordered list of items
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: Block</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: class</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;li&gt;</code>
+              elements</li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;ol&gt;</code></h3>
+          Represents an ordered list of items
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: Block</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: class</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: <code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;li&gt;</code>
+              elements</li>
+          </ul>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;li&gt;</code></h3>
+          An Item in a list of items. Must be the child of either a
+          <code style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;ul&gt;</code> or
+          <code style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;ol&gt;</code>
+          <ul>
+            <li style="padding: 2px 0px;"><strong>Display Default</strong>: Block</li>
+            <li style="padding: 2px 0px;"><strong>Attributes Used</strong>: class</li>
+            <li style="padding: 2px 0px;"><strong>Accepted Contents</strong>: Flow Content</li>
+          </ul>
+        </li>
+
+      </ol>
+    </div>
+
+    <div class="cheatsheet html-entities"
+      style="border-radius: 10px;border: 2px solid #333;margin: 10px 0px;padding: 5px;background-color: antiquewhite;">
+      <h2>HTML Entitites Cheat Sheet</h2>
+      <table style="width: 100%;border-collapse: collapse;">
+        <thead style="background-color: #333;color: white;">
+          <tr>
+            <th style="text-align: left;">Entitiy Name</th>
+            <th style="text-align: right;padding-right: 5px;">Entity</th>
+            <th style="text-align: right;padding-right: 5px;">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="height: 30px;">
+            <td>Less than</td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&amp;lt;</code></td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;</code></td>
+          </tr>
+          <tr style="height: 30px;">
+            <td>Greater than</td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&amp;gt;</code></td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&gt;</code></td>
+          </tr>
+          <tr style="height: 30px;">
+            <td>Ampersand</td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&amp;amp;</code></td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&amp;</code></td>
+          </tr>
+          <tr style="height: 30px;">
+            <td>Cent</td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&amp;cent;</code></td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&cent;</code></td>
+          </tr>
+          <tr style="height: 30px;">
+            <td>Pound</td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&amp;pound;</code></td>
+            <td style="text-align: right;padding-right: 5px;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&pound;</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cheatsheet css-selectors"
+      style="border-radius: 10px;border: 2px solid #333;margin: 10px 0px;padding: 5px;background-color: thistle;">
+      <h2>CSS Selectors Cheat Sheet</h2>
+      <div>
+        <h3 style="font-size: 20px;font-weight: normal;">Basic Selesctors</h3>
+        <ol>
+          <li>
+            <h3 style="font-size: 20px;font-weight: normal;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">element</code></h3>
+            The element selector is use to select an html tag
+            <pre
+              style="padding: 5px;background-color: #333;border-radius: 5px;border: 1px solid white;color: white;width: auto;">
+    &lt;div&gt;
+      ...
+    &lt;/div&gt;
+
+    div {
+      ...
+    }</pre>
+          </li>
+          <li>
+            <h3 style="font-size: 20px;font-weight: normal;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">#id</code></h3>
+            The ID selections is used to uniquley identify a single element in an HTML document.
+            <pre
+              style="padding: 5px;background-color: #333;border-radius: 5px;border: 1px solid white;color: white;width: auto;">
+    &lt;div id=&quot;cool-id&quot;&gt;
+      ...
+    &lt;/div&gt;
+
+    #cool-id {
+      ...
+    }</pre>
+          </li>
+          <li>
+            <h3 style="font-size: 20px;font-weight: normal;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">.class</code></h3>
+            The class selector is used to select all elements with the given attribute
+            <pre
+              style="padding: 5px;background-color: #333;border-radius: 5px;border: 1px solid white;color: white;width: auto;">
+    &lt;div class=&quot;cool-class&quot;&gt;
+      ...
+    &lt;/div&gt;
+
+    &lt;span class=&quot;cool-class&quot;&gt;
+      ...
+    &lt;/span&gt;
+
+    .cool-class {
+      ...
+    }
+  </pre>
+          </li>
+        </ol>
+      </div>
+      <div>
+        <h3 style="font-size: 20px;font-weight: normal;">Pseudo-selectors</h3>
+        <ol>
+          <li>
+            <h3 style="font-size: 20px;font-weight: normal;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">selector:nth-child(n)</code>
+            </h3>
+            Selects the nth child of the given selector
+          </li>
+          <li>
+            <h3 style="font-size: 20px;font-weight: normal;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">a:visited</code></h3>
+            Selects <code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">&lt;a&gt;</code> tags
+            that have already been clicked on by the user
+          </li>
+          <li>
+            <h3 style="font-size: 20px;font-weight: normal;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">selector:hover</code>
+            </h3>
+            Selects an element when the user is hovering over the element with the mouse
+          </li>
+        </ol>
+      </div>
+      <div>
+        <h3 style="font-size: 20px;font-weight: normal;">Compound Selectors</h3>
+        <ol>
+          <li>
+            <h3 style="font-size: 20px;font-weight: normal;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">foo bar</code></h3>
+            Selects a <code style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">foo</code>
+            that is below <code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">bar</code> somewhere in
+            the DOM
+          </li>
+          <li>
+            <h3 style="font-size: 20px;font-weight: normal;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">foo > bar</code></h3>
+            Selects a <code style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">bar</code>
+            that is a direct child of a <code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">bar</code>
+          </li>
+          <li>
+            <h3 style="font-size: 20px;font-weight: normal;"><code
+                style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">.foo.bar</code></h3>
+            Selects an element that has both the classes <code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">foo</code> and code <code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">bar</code>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+
+    <div class="cheatsheet css-properties"
+      style="border-radius: 10px;border: 2px solid #333;margin: 10px 0px;padding: 5px;background-color: rgb(148, 148, 48);">
+      <h2>CSS Properties Cheat Sheet</h2>
+      <ol>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">background-color</code>
+          </h3>
+          Changes the color of the background of the selected element <br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">white</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">black</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">#fff</code>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">color</code></h3>
+          Changes the color of the text <br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">white</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">black</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">#fff</code>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">margin</code></h3>
+          Used to create space outside of the border of the element<br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">10px</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">1em</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">2.4rem</code>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">padding</code></h3>
+          Used to create space between an element's content and it's borer<br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">10px</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">1em</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">2.4rem</code>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">font-family</code></h3>
+          Used to define the font-family that the element is to use<br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">Arial</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">monospace</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">sans-serif</code>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">font-size</code></h3>
+          Used to change the size of the element's text content<br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">10px</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">1em</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">2.4rem</code>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">border-radius</code></h3>
+          Used to round the borders of an element<br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">10px</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">1em</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">2.4rem</code>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">text-decoration</code>
+          </h3>
+          Used to give special decorations to some text<br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">underline</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">line-through</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">none</code>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">display</code></h3>
+          Used to change the way in which an element is displayed<br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">block</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">inline</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">flex</code>
+        </li>
+        <li>
+          <h3 style="font-size: 20px;font-weight: normal;"><code
+              style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">text-decoration</code>
+          </h3>
+          Used to change the way that the text is displayed<br>
+          <strong>Possible Values</strong>: <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">italic</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">solid</code>, <code
+            style="background-color: #333;color: white;padding: 2px 5px;border-radius: 4px;">dashed</code>
+        </li>
+      </ol>
+    </div>
+
+  </div>
+</body>
+
+</html>
