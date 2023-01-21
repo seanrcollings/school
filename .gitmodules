@@ -4,3 +4,6 @@
 [submodule "databases/final_project"]
 	path = databases/final_project
 	url = git@github.com:seanrcollings/usu-5800-final-project.git
+[submodule "cs4600/cs4600-quotes-search"]
+	path = cs4600/cs4600-quotes-search
+	url = git@github.com:seanrcollings/cs4600-quotes-search
