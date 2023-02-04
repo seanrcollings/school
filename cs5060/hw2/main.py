@@ -1,11 +1,10 @@
 import typing as t
 import abc
-from importlib.metadata import distribution, distributions
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+# BANDITS --------------------------------------------------------------------------
 class NormalBandits:
     def __init__(self, distributions: t.List[t.Tuple[float, float]], drift: int = 0):
         self.distributions = distributions
@@ -41,6 +40,9 @@ class MovingNormalBandits(NormalBandits):
             (mean + self.shifts.get(idx, 0), shift)
             for idx, (mean, shift) in enumerate(self.distributions)
         ]
+
+
+# AGENTS ---------------------------------------------------------------------------
 
 
 class Agent(abc.ABC):
@@ -162,6 +164,9 @@ class ThompshonSamplingAgent(Agent):
         return np.argmax(np.random.beta(self._as, self._bs))
 
 
+# DRIVER CODE ------------------------------------------------------------------
+
+
 def experiment(
     agent: Agent,
     experiments: int,
@@ -231,10 +236,14 @@ def part1(task: str):
         plt.legend()
         plt.show()
     elif task == "optimal":
-        N_experiments = 5
+        # Not necessarily an optimal solution as it finds
+        # an epsilon by seeing which falls under the threshhold the most during its runtime
+        N_epsilons = 100
         N_steps = 1000
-        N_epsilons = 10
-        epsilons = [i / N_epsilons for i in range(1, 10)]
+        epsilons = [i / N_epsilons for i in range(1, N_epsilons)]
+        threshhold = 1e-3
+        optimal_eps = 0.0
+        amount_converged = 0
 
         for i, ep in enumerate(epsilons):
             agent = EpsilonGreedyAgent(len(normal_distributions), ep)
@@ -245,9 +254,13 @@ def part1(task: str):
                 NormalBandits,
                 distributions=normal_distributions,
             )
-        # print(f"Optimal epsilon: {epsilons[avg_rewards.index(max(avg_rewards))]}")
+            ep_convergence = np.sum(np.abs(rates) <= threshhold)
+            if ep_convergence > amount_converged:
+                amount_converged = ep_convergence
+                optimal_eps = ep
+        print(f"Optimal epsilon: {optimal_eps}")
     elif task == "thompson":
-        agent = EpsilonGreedyAgent(len(normal_distributions), 0.02)
+        agent = EpsilonGreedyAgent(len(normal_distributions), 0.03)
         rewards, rates = experiment(
             agent,
             N_experiments,
@@ -273,10 +286,9 @@ def part1(task: str):
         return
 
 
-def part2(task):
+def part2(task: str):
     N_experiments = 10
     N_steps = 10_000
-    epsilons = [0.01, 0.05, 0.1, 0.4]
     normal_distributions = [
         (0, 5),
         (-0.5, 12),
@@ -305,7 +317,7 @@ def part2(task):
     plt.ylabel("Average Reward")
 
     if task == "epsilons":
-
+        epsilons = [0.01, 0.03, 0.05, 0.1, 0.4]
         for ep in epsilons:
             agent = EpsilonGreedyAgent(len(normal_distributions), ep)
             rewards, rates = experiment(
@@ -317,21 +329,7 @@ def part2(task):
                 drift=-0.001,
             )
             plt.plot(rewards, label=f"Greedy: $\\epsilon$ {ep}")
-        plt.legend()
-        plt.show()
 
-    elif task == "thompson":
-        agent = EpsilonGreedyAgent(len(normal_distributions), 0.02)
-        rewards, rates = experiment(
-            agent,
-            N_experiments,
-            N_steps,
-            NormalBandits,
-            distributions=normal_distributions,
-            drift=-0.001,
-        )
-
-        plt.plot(rewards, label="Optimal Greedy")
         agent = ThompshonSamplingAgent(len(normal_distributions))
         rewards, rates = experiment(
             agent,
@@ -351,13 +349,13 @@ def part2(task):
             agent,
             N_experiments,
             N_steps,
-            NormalBandits,
+            MovingNormalBandits,
             distributions=normal_distributions,
             drift=-0.001,
         )
-
         plt.plot(rewards, label="Optimal Greedy")
-        agent = ThompshonSamplingAgent(len(normal_distributions), 3000)
+
+        agent = ThompshonSamplingAgent(len(normal_distributions))
         rewards, rates = experiment(
             agent,
             N_experiments,
@@ -367,8 +365,22 @@ def part2(task):
             drift=-0.001,
         )
         plt.plot(rewards, label="Thompson Sampling")
+
+        agent = ThompshonSamplingAgent(len(normal_distributions), 3000)
+        rewards, rates = experiment(
+            agent,
+            N_experiments,
+            N_steps,
+            MovingNormalBandits,
+            distributions=normal_distributions,
+            drift=-0.001,
+        )
+        plt.plot(rewards, label="Thompson Sampling w/ restarts")
+
         plt.legend()
         plt.show()
+    else:
+        print("Possible tasks: epsilons, restart, ")
 
 
 def main():
