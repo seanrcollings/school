@@ -1,0 +1,8 @@
+#!/usr/bin/env fish
+
+rm -rf img
+mkdir img
+
+for file in (gls src)
+    dot -Tpng src/$file >> img/(echo $file | cut -d '.' -f1).png
+end

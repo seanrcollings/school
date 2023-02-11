@@ -1,0 +1,16 @@
+digraph G {
+    layout=dot;
+    ordering=out;
+    rankdir="LR";
+
+    s0 [label=0, peripheries=2]
+    s1 [label=1, peripheries=2]
+    s2 [label=2, peripheries=2]
+
+    s0 -> s1 [label=0]
+    s0 -> s2 [label=1]
+    s1 -> s2 [label=1]
+    s2 -> s1 [label=0]
+    s1 -> s1 [label=0]
+    s2 -> s2 [label=1]
+}
