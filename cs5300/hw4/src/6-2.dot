@@ -1,0 +1,11 @@
+digraph G {
+    layout=dot;
+    ordering=out;
+    rankdir="LR";
+
+    s0 [label=0]
+    s1 [label=1, peripheries=2]
+
+    s0 -> s1 [label="A-Z,a-z,_"]
+    s1 -> s1 [label="A-Z,a-z,0-9,_"]
+}

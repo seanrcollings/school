@@ -1,0 +1,131 @@
+// Modify this file to create your tables for the Pasca language.
+
+// Special tokens are \space, \t and \n.
+ClassifierTable
+a char
+b char
+c char
+d char
+e char
+f char
+g char
+h char
+i char
+j char
+k char
+l char
+m char
+n char
+o char
+p char
+q char
+r char
+s char
+t char
+u char
+v char
+w char
+x char
+y char
+z char
+0 zero
+1 digit
+2 digit
+3 digit
+4 digit
+5 digit
+6 digit
+7 digit
+8 digit
+9 digit
+' quote
+; delimiter
+{ delimiter
+} delimiter
+. delimiter
+( open_paren
+) close_paren
+* asterisk
+\space whitespace
+\t whitespace
+\n whitespace
+
+
+// In the transition table, the first state
+// is considered the input state.
+TransitionTable
+s0 char s1
+// Identifier
+s1 char s1
+s1 digit s1
+s1 zero s1
+
+// String
+s0 quote s2
+s2 char s2
+s2 digit s2
+s2 zero s2
+s2 whitespace s2
+s2 delimiter s2
+s2 open_paren s2
+s2 close_paren s2
+s2 asterisk s2
+s2 quote s3
+s3 quote s2
+
+// Integer
+s0 digit s4
+s4 digit s4
+s4 zero s4
+
+// Delimiters
+s0 delimiter s5
+
+// Comments
+s0 open_paren s6
+s6 asterisk s7
+
+s7 asterisk s8
+s8 asterisk s8
+s8 char s9
+s8 zero s9
+s8 digit s9
+s8 quote s9
+s8 delimiter s9
+s8 open_paren s9
+s8 whitespace s9
+s8 close_paren s10
+
+s7 char s9
+s7 zero s9
+s7 digit s9
+s7 quote s9
+s7 delimiter s9
+s7 open_paren s9
+s7 close_paren s9
+s7 whitespace s9
+s9 char s9
+s9 zero s9
+s9 digit s9
+s9 quote s9
+s9 delimiter s9
+s9 open_paren s9
+s9 close_paren s9
+s9 whitespace s9
+s9 asterisk s8
+
+// Whitespace
+s0 whitespace s11
+s11 whitespace s11
+
+// If a state has an entry in this table then
+// it is considered an accept state.
+// "ignore" is a reserved type which indicates
+// that the token should be ignored.
+TokenTypeTable
+s1 identifier
+s3 string
+s4 integer
+s5 delimiter
+s10 ignore
+s11 ignore

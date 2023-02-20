@@ -1,0 +1,13 @@
+begin
+(**)
+(* a straightforward comment *)
+(** a crazy com*ment02 {}() ****)
+program a1 {
+  var0 is 8;
+  (* some crazy identifier names *)
+  var1 var2 variable var1able
+}
+(* some integers *)
+123 1203
+' a crazy string abc(){}*''4013'
+end.

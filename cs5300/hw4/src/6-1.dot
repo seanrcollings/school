@@ -1,0 +1,24 @@
+
+digraph G {
+    layout=dot;
+    ordering=out;
+    rankdir="LR";
+
+    s0 [label=0]
+    s1 [label=1, peripheries=2]
+    s2 [label=2, peripheries=2]
+    s3 [label=3]
+    s4 [label=4, peripheries=2]
+    s5 [label=5, peripheries=2]
+
+    s0 -> s1 [label=0]
+    s0 -> s2 [label="1-9"]
+    s2 -> s2 [label="0-9"]
+
+    s1 -> s3 [label="x,X"]
+    s3 -> s5 [label="0-9,A-F"]
+    s5 -> s5 [label="0-9,A-F"]
+
+    s1 -> s4 [label="0-7"]
+    s4 -> s4 [label="0-7"]
+}

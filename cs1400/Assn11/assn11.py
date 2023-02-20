@@ -1,12 +1,14 @@
-'''
+"""
     This is the starter file. Only fill in the areas indicated.
     Do not modify existing code.
     Replace this file header with the normal file header (name, etc)
-'''
+"""
 
 #### Add Import Statement(s) as needed ####
 import pattern
+
 #### End Add Import Statement(s) ####
+
 
 def main():
     # Setup pattern
@@ -36,9 +38,10 @@ def main():
             rotation = eval(input("Rotation : "))
             #### End Add Inputs Statement(s) ####
 
-
             # Draw the rectangle pattern
-            pattern.drawRectanglePattern(centerX, centerY, offset, width, height, count, rotation)
+            pattern.drawRectanglePattern(
+                centerX, centerY, offset, width, height, count, rotation
+            )
 
         # If they choose 'Circle Patterns'
         elif mode == 2:
@@ -83,4 +86,3 @@ def main():
 
 
 main()
-        
