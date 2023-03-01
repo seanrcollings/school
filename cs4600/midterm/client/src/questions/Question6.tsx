@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export const Question6 = () => {
   const [count, setCount] = useState(0);
-  const [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
     if (enabled) {

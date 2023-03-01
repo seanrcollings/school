@@ -24,6 +24,29 @@ export const Question7 = () => {
             the DB, they wouldn't be able to see what the actual passwords for
             the users are, just their hashes.
           </p>
+
+          <p>
+            Note that the following example does not produce fixed-length
+            output, nor does it actually do anything to prevent hash collisions
+          </p>
+          <pre>
+            {`
+
+const BIG_COMPOSITE_NUMBER = BIG_PRIME_NUMBER_1 * BIG_PRIME_NUMBER_2;
+
+function hash(password: string): string {
+  let hashed: number = 1;
+  password.split("").forEach((c) => {
+    const code = c.charCodeAt(0);
+    const x = BIG_COMPOSITE_NUMBER ** code;
+    hashed += hashed % x;
+  })
+
+  return hashed.toString();
+}
+
+`}
+          </pre>
         </div>
       </div>
     </section>

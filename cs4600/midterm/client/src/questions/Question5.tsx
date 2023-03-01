@@ -14,17 +14,9 @@ export const Question5 = () => {
   useEffect(() => setNumber(random()), []);
 
   const applyExpression = () => {
-    if (!number) return;
-    const opt = expression[0];
-    const operand = parseInt(expression.slice(1), 10);
-    switch (opt) {
-      case "+":
-        setNumber(number + operand);
-        break;
-      case "-":
-        setNumber(number - operand);
-        break;
-    }
+    if (!number || !expression) return;
+    const value = parseFloat(expression);
+    setNumber(number + value);
   };
 
   return (
