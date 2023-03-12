@@ -9,7 +9,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import jdk.jfr.internal.Utils;
 import lexer.ExprLexer;
 import lexer.ParenLexer;
 import lexer.SimpleLexer;
@@ -49,7 +48,7 @@ public class Parser {
     states = new States();
 
     // TODO: Call methods to compute the states and parsing tables here.
-    constructTables();
+    constructStatesAndTables();
   }
 
   public States getStates() {
@@ -104,14 +103,14 @@ public class Parser {
     return ret;
   }
 
-  private void constructTables() {
+  private void constructStatesAndTables() {
     Item startItem = new Item(grammar.startRule, 0, Util.EOF);
     State startState = computeClosure(startItem, grammar);
     states.add(startState);
-    constructStates(startState);
+    constructStatesAndTables(startState);
   }
 
-  private void constructStates(State state) {
+  private void constructStatesAndTables(State state) {
     HashMap<String, Action> stateAction = actionTable.computeIfAbsent(state.getName(), (s) -> new HashMap<>());
     HashMap<String, State> stateGoto = gotoTable.computeIfAbsent(state.getName(), (s) -> new HashMap<>());
 
@@ -133,7 +132,7 @@ public class Parser {
 
         if (!states.contains(newState)) {
           states.add(newState);
-          constructStates(newState);
+          constructStatesAndTables(newState);
         }
       }
 
@@ -249,8 +248,6 @@ public class Parser {
     return builder.toString();
   }
 
-  // TODO: Implement this method
-  // You should return a list of the actions taken.
   public List<Action> parse(Lexer scanner) throws ParserException {
     // tokens is the output from the scanner. It is the list of tokens
     // scanned from the input file.
@@ -266,11 +263,39 @@ public class Parser {
       input.push(v.getSymbolicName(t.getType()));
     }
     Collections.reverse(tokens);
-//    System.out.println(input);
+    System.out.println(input);
 
-    // TODO: Parse the tokens. On an error, throw a ParseException, like so:
-    //    throw ParserException.create(tokens, i)
     List<Action> actions = new ArrayList<>();
+    Stack<State> stack  = new Stack<>();
+    stack.push(states.getState(0));
+    int i = 0;
+    String a = input.pop();
+
+    while (true) {
+      State s = stack.peek();
+      Action action = actionTable.get(s.getName()).get(a);
+
+      if (action == null) throw ParserException.create(tokens, i);
+
+      actions.add(action);
+
+      if (action.isShift()) {
+        stack.push(states.getState(action.getState()));
+        a = input.pop();
+        i++;
+      } else if (action.isReduce()) {
+        int magnitude = action.getRule().getRhs().size();
+        for(int j =0; j < magnitude; j++) {
+          stack.pop();
+        }
+        State t = stack.peek();
+        stack.push(gotoTable.get(t.getName()).get(action.getRule().getLhs()));
+
+      } else if (action.isAccept()) {
+        break;
+      }
+    }
+
     return actions;
   }
 
