@@ -12,6 +12,10 @@ public class States {
         this.states = new ArrayList<>();
     }
 
+    public List<State> getStates() {
+        return states;
+    }
+
     public State getState(int name) {
         if (name >= states.size()) {
             return null;
@@ -21,6 +25,7 @@ public class States {
 
     public void add(State state) {
         if (!stateSet.contains(state)) {
+            state.setName(id++);
             this.states.add(state);
             this.stateSet.add(state);
         }
@@ -29,6 +34,11 @@ public class States {
     public boolean contains(State state) {
         return stateSet.contains(state);
     }
+
+    public int indexOf(State state) {
+        return states.indexOf(state);
+    }
+
 
     public Integer size() { return states.size(); }
 

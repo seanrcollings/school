@@ -24,6 +24,9 @@ public class State implements Comparable<State> {
     public void setName(int name) {
         this.name = name;
     }
+    public Integer getName() {
+        return name;
+    }
 
     public void add(Item item) {
         if (!itemSet.contains(item)) {

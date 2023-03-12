@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import jdk.jfr.internal.Utils;
 import lexer.ExprLexer;
 import lexer.ParenLexer;
 import lexer.SimpleLexer;
@@ -32,12 +33,12 @@ public class Parser {
    * actionTable.get(state).get(terminal). You may replace
    * the Integer with a State class if you choose.
    */
-  private final HashMap<State, HashMap<String, Action>> actionTable;
+  private final HashMap<Integer, HashMap<String, Action>> actionTable;
   /**
    * Goto table for bottom-up parsing. Accessed as gotoTable.get(state).get(nonterminal).
    * You may replace the Integers with State classes if you choose.
    */
-  private final HashMap<State, HashMap<String, Integer>> gotoTable;
+  private final HashMap<Integer, HashMap<String, State>> gotoTable;
 
   public Parser(String grammarFilename) throws IOException {
     actionTable = new HashMap<>();
@@ -48,10 +49,7 @@ public class Parser {
     states = new States();
 
     // TODO: Call methods to compute the states and parsing tables here.
-    Item startItem = new Item(grammar.startRule, 0, Util.EOF);
-    State startState = computeClosure(startItem, grammar);
-    computeStates(startState);
-    System.out.println(states);
+    constructTables();
   }
 
   public States getStates() {
@@ -91,13 +89,9 @@ public class Parser {
       }
     }
 
-//    System.out.println(closure.toString());
     return closure;
   }
 
-  // TODO: Implement this method.
-  //   This returns a new state that represents the transition from
-  //   the given state on the symbol X.
   static public State GOTO(State state, String X, Grammar grammar) {
     State ret = new State();
     for (Item item : state.getItems()) {
@@ -110,36 +104,148 @@ public class Parser {
     return ret;
   }
 
-  private void computeStates(State state) {
-    states.add(state);
+  private void constructTables() {
+    Item startItem = new Item(grammar.startRule, 0, Util.EOF);
+    State startState = computeClosure(startItem, grammar);
+    states.add(startState);
+    constructStates(startState);
+  }
+
+  private void constructStates(State state) {
+    HashMap<String, Action> stateAction = actionTable.computeIfAbsent(state.getName(), (s) -> new HashMap<>());
+    HashMap<String, State> stateGoto = gotoTable.computeIfAbsent(state.getName(), (s) -> new HashMap<>());
 
     for (Item item: state.getItems()) {
-      State newState = GOTO(state, item.getNextSymbol(), grammar);
-      if (!states.contains(newState) && newState.size() > 0) {
-        computeStates(newState);
+      String symbol = item.getNextSymbol();
+
+      // Compute a new state, and create shifts and gotos
+      if (symbol != null) {
+        State newState = GOTO(state, symbol, grammar);
+
+        if (states.contains(newState))
+          newState = states.getState(states.indexOf(newState));
+
+        if (grammar.isNonterminal(symbol))
+          stateGoto.put(symbol, newState);
+
+        if (grammar.isTerminal(symbol))
+          stateAction.put(symbol, Action.createShift(newState.getName()));
+
+        if (!states.contains(newState)) {
+          states.add(newState);
+          constructStates(newState);
+        }
+      }
+
+      // Check for Accepting states
+      else if (item.getLookahead().equals(Util.EOF)
+              && grammar.startRule.equals(item.getRule())) {
+        stateAction.put(Util.EOF, Action.createAccept());
+      }
+
+      // Check for reduces
+      else {
+        stateAction.put(item.getLookahead(), Action.createReduce(item.getRule()));
       }
     }
   }
 
-  // TODO: Implement this method
-  // You will want to use StringBuilder. Another useful method will be String.format: for
-  // printing a value in the table, use
-  //   String.format("%8s", value)
-  // How much whitespace you have shouldn't matter with regard to the tests, but it will
-  // help you debug if you can format it nicely.
   public String actionTableToString() {
     StringBuilder builder = new StringBuilder();
+    builder.append(String.format("%-5s", ""));
+    builder.append(" | ");
+    List<String> terminals = actionTable
+            .values()
+            .stream()
+            .map(HashMap::keySet)
+            .flatMap(Collection::stream)
+            .sorted(Comparator.reverseOrder())
+            .distinct()
+            .collect(Collectors.toList());
+
+    for (String key : terminals) {
+      builder.append(String.format("%11s", key));
+      builder.append(" | ");
+    }
+
+    builder.append("\n");
+    int len = builder.lastIndexOf("\n");
+    builder.append(Stream.generate(() -> "-").limit(len).collect(Collectors.joining()));
+    builder.append("\n");
+
+    for (State state: states.getStates()) {
+      builder.append(String.format("%-5d", state.getName()));
+      builder.append(" | ");
+
+      HashMap<String, Action> actions = actionTable.get(state.getName());
+      for (String terminal: terminals) {
+        if (actions != null) {
+          Action action = actions.get(terminal);
+
+          if (action != null) {
+            builder.append(String.format("%11s", action));
+          } else {
+            builder.append(String.format("%11s", ""));
+          }
+          builder.append(" | ");
+        } else {
+          builder.append(String.format("%11s", ""));
+          builder.append(" | ");
+        }
+      }
+
+      builder.append("\n");
+    }
+
     return builder.toString();
   }
 
-  // TODO: Implement this method
-  // You will want to use StringBuilder. Another useful method will be String.format: for
-  // printing a value in the table, use
-  //   String.format("%8s", value)
-  // How much whitespace you have shouldn't matter with regard to the tests, but it will
-  // help you debug if you can format it nicely.
   public String gotoTableToString() {
     StringBuilder builder = new StringBuilder();
+    builder.append(String.format("%-5s", ""));
+    builder.append(" | ");
+    List<String> nonTerminals = gotoTable
+            .values()
+            .stream()
+            .map(HashMap::keySet)
+            .flatMap(Collection::stream)
+            .distinct()
+            .collect(Collectors.toList());
+
+    for (String key : nonTerminals) {
+      builder.append(String.format("%11s", key));
+      builder.append(" | ");
+    }
+
+    builder.append("\n");
+    int len = builder.lastIndexOf("\n") ;
+    builder.append(Stream.generate(() -> "-").limit(len).collect(Collectors.joining()));
+    builder.append("\n");
+
+    for (State state: states.getStates()) {
+      builder.append(String.format("%-5d", state.getName()));
+      builder.append(" | ");
+
+      HashMap<String, State> next = gotoTable.get(state.getName());
+      for (String nonTerminal: nonTerminals) {
+        if (next != null) {
+          State gotoState = next.get(nonTerminal);
+
+          if (gotoState != null) {
+            builder.append(String.format("%11d", gotoState.getName()));
+          } else {
+            builder.append(String.format("%11s", ""));
+          }
+          builder.append(" | ");
+        } else {
+          builder.append(String.format("%11s", ""));
+          builder.append(" | ");
+        }
+      }
+
+      builder.append("\n");
+    }
+
     return builder.toString();
   }
 
