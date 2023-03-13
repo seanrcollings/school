@@ -268,46 +268,44 @@ public class Main {
       }
 
     }
-//
-//    {
-//      // TODO: To pass these tests you must implement data/Tiny.cfg
-//      //   according to the grammar given in data/tinyGrammar.pdf.
-//      //   See notes in data/Tiny.cfg (be sure to read all of them!).
-//      Parser parser = new Parser("data/Tiny.cfg");
-//
-//      String fn = "data/tiny1.dat";
-//      try {
-//        List<Action> actions = parser.parseFromFile(fn);
-//        tests.test(countMatches(actions.toString(), 'S'), 11); // 11 shift actions
-//        tests.test(countMatches(actions.toString(), 'R'), 25); // 25 reduce actions
-//      } catch (ParserException e) {
-//        tests.addFailure("Failed to parse " + fn + ": " + e.getMessage());
-//      }
-//
-//      fn = "data/tiny2.dat";
-//      try {
-//        List<Action> actions = parser.parseFromFile(fn);
-//        tests.test(countMatches(actions.toString(), 'S'), 27); // 27 shift actions
-//        tests.test(countMatches(actions.toString(), 'R'), 55); // 55 reduce actions
-//      } catch (ParserException e) {
-//        tests.addFailure("Failed to parse " + fn + ": " + e.getMessage());
-//      }
-//
-//      fn = "data/tiny3.dat";
-//      try {
-//        List<Action> actions = parser.parseFromFile(fn);
-//        tests.addFailure("Should have failed to parse " + fn);
-//      } catch (ParserException e) {
-//      }
-//
-//      fn = "data/tiny4.dat";
-//      try {
-//        List<Action> actions = parser.parseFromFile(fn);
-//        tests.addFailure("Should have failed to parse " + fn);
-//      } catch (ParserException e) {
-//      }
-//
-//    }
+
+    {
+      Parser parser = new Parser("data/Tiny.cfg");
+
+      String fn = "data/tiny1.dat";
+      try {
+        List<Action> actions = parser.parseFromFile(fn);
+        tests.test(countMatches(actions.toString(), 'S'), 11); // 11 shift actions
+        tests.test(countMatches(actions.toString(), 'R'), 25); // 25 reduce actions
+      } catch (ParserException e) {
+        tests.addFailure("Failed to parse " + fn + ": " + e.getMessage());
+      }
+
+      fn = "data/tiny2.dat";
+      System.out.println(parser.actionTableToString());
+      try {
+        List<Action> actions = parser.parseFromFile(fn);
+        tests.test(countMatches(actions.toString(), 'S'), 27); // 27 shift actions
+        tests.test(countMatches(actions.toString(), 'R'), 55); // 55 reduce actions
+      } catch (ParserException e) {
+        tests.addFailure("Failed to parse " + fn + ": " + e.getMessage());
+      }
+
+      fn = "data/tiny3.dat";
+      try {
+        List<Action> actions = parser.parseFromFile(fn);
+        tests.addFailure("Should have failed to parse " + fn);
+      } catch (ParserException e) {
+      }
+
+      fn = "data/tiny4.dat";
+      try {
+        List<Action> actions = parser.parseFromFile(fn);
+        tests.addFailure("Should have failed to parse " + fn);
+      } catch (ParserException e) {
+      }
+
+    }
   }
 
   private static int countMatches(String s, char c) {

@@ -7,6 +7,8 @@ public class State implements Comparable<State> {
     private List<Item> items;
     private int name;
 
+    public String transitionSymbol;
+
     public State(int name) {
         this.itemSet = new HashSet<>();
         this.items = new ArrayList<>();

@@ -100,6 +100,8 @@ public class Parser {
         ret.addAll(closure.getItems());
       }
     }
+
+    ret.transitionSymbol = X;
     return ret;
   }
 
@@ -121,27 +123,24 @@ public class Parser {
       if (symbol != null) {
         State newState = GOTO(state, symbol, grammar);
 
-        if (states.contains(newState))
+        if (states.contains(newState)) {
           newState = states.getState(states.indexOf(newState));
-
-        if (grammar.isNonterminal(symbol))
-          stateGoto.put(symbol, newState);
-
-        if (grammar.isTerminal(symbol))
-          stateAction.put(symbol, Action.createShift(newState.getName()));
-
-        if (!states.contains(newState)) {
+        } else {
           states.add(newState);
           constructStatesAndTables(newState);
         }
-      }
 
+        if (grammar.isNonterminal(symbol)) {
+          stateGoto.put(symbol, newState);
+        }  else if (grammar.isTerminal(symbol)) {
+          stateAction.put(symbol, Action.createShift(newState.getName()));
+        }
+      }
       // Check for Accepting states
       else if (item.getLookahead().equals(Util.EOF)
               && grammar.startRule.equals(item.getRule())) {
         stateAction.put(Util.EOF, Action.createAccept());
       }
-
       // Check for reduces
       else {
         stateAction.put(item.getLookahead(), Action.createReduce(item.getRule()));
@@ -263,33 +262,44 @@ public class Parser {
       input.push(v.getSymbolicName(t.getType()));
     }
     Collections.reverse(tokens);
-    System.out.println(input);
 
     List<Action> actions = new ArrayList<>();
     Stack<State> stack  = new Stack<>();
+    Stack<String> symbolStack = new Stack<>();
     stack.push(states.getState(0));
-    int i = 0;
+
     String a = input.pop();
 
     while (true) {
       State s = stack.peek();
       Action action = actionTable.get(s.getName()).get(a);
+//      System.out.println(
+//              String.format("%-4s", action.toString()) +
+//              " | " + String.format("%-35s", symbolStack.toString()) +
+//              " | " + stack.stream().map(State::getName).collect(Collectors.toList()).toString()
+//      );
 
-      if (action == null) throw ParserException.create(tokens, i);
+      if (action == null)
+        throw ParserException.create(tokens, tokens.size() - input.size());
 
       actions.add(action);
 
       if (action.isShift()) {
-        stack.push(states.getState(action.getState()));
+        State newState = states.getState(action.getState());
+        stack.push(newState);
         a = input.pop();
-        i++;
+        symbolStack.push(newState.transitionSymbol);
       } else if (action.isReduce()) {
-        int magnitude = action.getRule().getRhs().size();
-        for(int j =0; j < magnitude; j++) {
+        Rule rule = action.getRule();
+
+        for (int j =0; j < rule.getRhs().size(); j++) {
           stack.pop();
+          symbolStack.pop();
         }
+
         State t = stack.peek();
-        stack.push(gotoTable.get(t.getName()).get(action.getRule().getLhs()));
+        stack.push(gotoTable.get(t.getName()).get(rule.getLhs()));
+        symbolStack.push(rule.getLhs());
 
       } else if (action.isAccept()) {
         break;
