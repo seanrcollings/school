@@ -4,45 +4,57 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd7a0d5f-381e-4aee-961c-6ada7279e71c" name="Default Changelist" comment="">
+    <list default="true" id="2f779c3f-c35a-48bf-a12e-874b5636af6e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/submit/ast/AssignmentExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/Call.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/CompoundStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/ExpressionStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/FunctionDeclaration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/UnaryOperator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/UnaryOperatorType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../cs4600/cs4600-reptile-tracker" beforeDir="false" afterPath="$PROJECT_DIR$/../../cs4600/cs4600-reptile-tracker" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../p3-parser/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../p3-parser/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/parser/Grammar.java" root0="FORCE_HIGHLIGHTING" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="1pJm0B2Xh3PJdSxrMiSvWdhByju" />
+  <component name="ProjectId" id="1q8Armv1XmAH53It8MIrBv1FYxz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/home/sean/sourcecode/school/cs5300/p4-formatter",
+    "jdk.selected.JAVA_MODULE": "1.8",
+    "last_opened_file_path": "/home/sean/sourcecode/school/cs5300/p4-formatter/parser",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
+    "settings.editor.selected.configurable": "preferences.pathVariables"
   }
 }]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="parser.Main" />
-      <module name="p3-parser1" />
+      <option name="MAIN_CLASS_NAME" value="main.Main" />
+      <module name="main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="parser.*" />
+          <option name="PATTERN" value="main.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -74,35 +86,27 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="dd7a0d5f-381e-4aee-961c-6ada7279e71c" name="Default Changelist" comment="" />
-      <created>1614909341417</created>
+      <changelist id="2f779c3f-c35a-48bf-a12e-874b5636af6e" name="Default Changelist" comment="" />
+      <created>1616451044321</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1614909341417</updated>
-      <workItem from="1614909346458" duration="1380000" />
+      <updated>1616451044321</updated>
+      <workItem from="1616451052971" duration="726000" />
+      <workItem from="1616473712776" duration="222000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="UnknownFeatures">
-    <option featureType="com.intellij.fileTypeFactory" implementationName="*.tokens" />
-    <option featureType="com.intellij.fileTypeFactory" implementationName="*.cfg" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <breakpoint type="java-exception">
+        <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="1" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <pin-to-top-manager>
-      <pinned-members>
-        <PinnedItemInfo parentTag="parser.States" memberName="states" />
-      </pinned-members>
-    </pin-to-top-manager>
   </component>
 </project>
