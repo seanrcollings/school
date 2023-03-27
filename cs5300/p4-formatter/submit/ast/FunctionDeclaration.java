@@ -39,6 +39,5 @@ public class FunctionDeclaration implements Declaration, Node {
 
         builder.append(")\n");
         body.toCminus(builder, prefix);
-//        builder.append("\n");
     }
 }

@@ -15,6 +15,7 @@ public class WhileStatement implements Statement {
         builder.append(prefix).append("while (");
         condition.toCminus(builder, "");
         builder.append(")\n");
-        body.toCminus(builder, prefix + " ");
+        String bodyPrefix = body.getClass().equals(CompoundStatement.class) ? prefix : prefix + " ";
+        body.toCminus(builder, bodyPrefix);
     }
 }

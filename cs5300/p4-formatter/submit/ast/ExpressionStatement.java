@@ -10,9 +10,6 @@ public class ExpressionStatement implements  Statement {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        // TODO: remove  this
-        if (expression == null) return;
-
         builder.append(prefix);
         this.expression.toCminus(builder, prefix);
         builder.append(";\n");
