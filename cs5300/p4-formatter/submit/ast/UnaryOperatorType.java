@@ -2,7 +2,8 @@ package submit.ast;
 
 public enum UnaryOperatorType {
 
-    INCREMENT("++"), DECREMENT("--");
+    INCREMENT("++"), DECREMENT("--"),
+    NEGATE("-"), POINTER("*"), QUESTION("?"), BANG("!");
 
     private final String value;
 

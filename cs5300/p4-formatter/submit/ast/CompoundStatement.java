@@ -13,7 +13,8 @@ public class CompoundStatement implements Statement {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder.append(prefix).append("{\n");
+        String parentPrefix = prefix.length() > 0 ?  prefix.substring(0, prefix.length()-1) : prefix;
+        builder.append(parentPrefix).append("{\n");
 
         String childPrefix = prefix + "  ";
 
@@ -27,6 +28,6 @@ public class CompoundStatement implements Statement {
                 s.toCminus(builder, childPrefix);
         }
 
-        builder.append(prefix).append("}\n");
+        builder.append(parentPrefix).append("}\n");
     }
 }

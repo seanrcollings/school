@@ -13,7 +13,7 @@ public class Call implements Expression {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder.append(prefix).append(id).append("(");
+        builder.append(id).append("(");
 
         boolean first = true;
         for (Expression param: params) {

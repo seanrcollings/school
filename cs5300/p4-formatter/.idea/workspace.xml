@@ -5,15 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2f779c3f-c35a-48bf-a12e-874b5636af6e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/submit/ast/AssignmentExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/submit/ast/Call.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/submit/ast/CompoundStatement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/submit/ast/ExpressionStatement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/submit/ast/FunctionDeclaration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/submit/ast/UnaryOperator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/submit/ast/UnaryOperatorType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../cs4600/cs4600-reptile-tracker" beforeDir="false" afterPath="$PROJECT_DIR$/../../cs4600/cs4600-reptile-tracker" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../p3-parser/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../p3-parser/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/BreakStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/IfStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/Immutable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submit/ast/WhileStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submit/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/submit/ASTVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submit/ast/Call.java" beforeDir="false" afterPath="$PROJECT_DIR$/submit/ast/Call.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submit/ast/CompoundStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/submit/ast/CompoundStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submit/ast/FunctionDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/submit/ast/FunctionDeclaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submit/ast/UnaryOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/submit/ast/UnaryOperator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submit/ast/UnaryOperatorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/submit/ast/UnaryOperatorType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -36,18 +39,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "jdk.selected.JAVA_MODULE": "1.8",
-    "last_opened_file_path": "/home/sean/sourcecode/school/cs5300/p4-formatter/parser",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pathVariables"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;1.8&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/sean/sourcecode/school/cs5300/p4-formatter/parser&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pathVariables&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
@@ -106,7 +109,17 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/submit/ASTVisitor.java</url>
+          <line>251</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="c.getText()" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

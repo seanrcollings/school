@@ -18,12 +18,15 @@ public class FunctionDeclaration implements Declaration, Node {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder
-                .append("\n")
-                .append(returnType)
-                .append(" ")
-                .append(id)
-                .append("(");
+        builder.append("\n");
+
+        if (returnType == null) {
+            builder.append("void");
+        } else {
+            builder.append(returnType);
+        }
+
+        builder.append(" ").append(id).append("(");
 
         for (int i = 0; i < paramIds.size(); ++i) {
             String id = paramIds.get(i);
@@ -36,6 +39,6 @@ public class FunctionDeclaration implements Declaration, Node {
 
         builder.append(")\n");
         body.toCminus(builder, prefix);
-        builder.append("\n");
+//        builder.append("\n");
     }
 }
