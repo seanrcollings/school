@@ -1,5 +1,6 @@
 package submit;
 
+import org.antlr.v4.runtime.tree.TerminalNode;
 import parser.CminusBaseVisitor;
 import parser.CminusParser;
 import submit.ast.*;
@@ -190,11 +191,13 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     @Override
     public Expression visitUnaryRelExpression(CminusParser.UnaryRelExpressionContext ctx) {
         if (ctx.BANG().size() > 0) {
-            return new UnaryOperator(
-                    visitRelExpression(ctx.relExpression()),
-                    ctx.BANG().stream().map((b) -> UnaryOperatorType.BANG).collect(Collectors.toList()),
-                    "left"
-            );
+            Expression curr = visitRelExpression(ctx.relExpression());
+
+            for (TerminalNode op: ctx.BANG()) {
+                curr = new UnaryOperator(curr, UnaryOperatorType.BANG, "left");
+            }
+
+            return curr;
         }
 
         return  visitRelExpression(ctx.relExpression());
@@ -230,15 +233,13 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
             return visitFactor(ctx.factor());
         }
 
-        return new UnaryOperator(
-                visitFactor(ctx.factor()),
-                ctx
-                        .unaryop()
-                        .stream()
-                        .map((u) -> UnaryOperatorType.fromString(u.getText()))
-                        .collect(Collectors.toList()),
-                "left"
-        );
+        Expression curr = visitFactor(ctx.factor());
+
+        for (CminusParser.UnaryopContext op: ctx.unaryop()) {
+            curr = new UnaryOperator(curr, UnaryOperatorType.fromString(op.getText()), "left");
+        }
+
+        return curr;
     }
 
     @Override
@@ -254,8 +255,6 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         Expression expr = ctx.expression() != null ? visitExpression(ctx.expression()) : null;
         return new Mutable(ctx.ID().getText(), expr);
     }
-
-
 
     @Override
     public Immutable visitImmutable(CminusParser.ImmutableContext ctx) {
