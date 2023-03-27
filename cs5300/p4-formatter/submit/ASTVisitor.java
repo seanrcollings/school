@@ -235,7 +235,8 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 
         Expression curr = visitFactor(ctx.factor());
 
-        for (CminusParser.UnaryopContext op: ctx.unaryop()) {
+        for (int i  = ctx.unaryop().size() - 1; i >= 0; i--) {
+            CminusParser.UnaryopContext op = ctx.unaryop().get(i);
             curr = new UnaryOperator(curr, UnaryOperatorType.fromString(op.getText()), "left");
         }
 
