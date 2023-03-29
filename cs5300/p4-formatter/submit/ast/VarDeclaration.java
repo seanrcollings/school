@@ -14,7 +14,7 @@ import java.util.List;
 public class VarDeclaration implements Declaration, Node {
 
   private final VarType type;
-  private final List<String> ids;
+  public final List<String> ids;
   private final List<Integer> arraySizes;
   private final boolean isStatic;
 
