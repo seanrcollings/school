@@ -8,7 +8,7 @@ package submit.ast;
  *
  * @author edwajohn
  */
-public class Break implements Statement {
+public class Break extends AbstractNode implements Statement {
 
   @Override
   public void toCminus(StringBuilder builder, String prefix) {

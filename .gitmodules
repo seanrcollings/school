@@ -10,3 +10,6 @@
 [submodule "cs4600/cs4600-reptile-tracker"]
 	path = cs4600/cs4600-reptile-tracker
 	url = git@github.com:seanrcollings/cs4600-reptile-tracker
+[submodule "cs4600/final"]
+	path = cs4600/final
+	url = ssh://git@github.com/seanrcollings/usu-cs4600-final.git

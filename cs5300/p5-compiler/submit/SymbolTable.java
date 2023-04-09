@@ -16,11 +16,14 @@ public class SymbolTable {
   private final HashMap<String, SymbolInfo> table;
   private SymbolTable parent;
   private final List<SymbolTable> children;
+  private int uniqueLabelCount = 0;
 
   public SymbolTable() {
     table = new HashMap<>();
     parent = null;
     children = new ArrayList<>();
+
+    table.put("println", new SymbolInfo("println", null, true));
   }
 
   public void addSymbol(String id, SymbolInfo symbol) {
@@ -56,8 +59,31 @@ public class SymbolTable {
     return child;
   }
 
+  public SymbolTable getChild(int i) {
+    return children.get(i);
+  }
+
   public SymbolTable getParent() {
     return parent;
   }
 
+  public SymbolTable getRoot() {
+    SymbolTable curr = this;
+
+    while (curr.getParent() != null)
+      curr = curr.getParent();
+
+    return curr;
+  }
+
+  public int getActivationRecordSize() {
+    return (table.size() - 1) * 4;
+  }
+
+  public String getUniqueLabel() {
+    if (parent == null) {
+      return String.format("datalabel%d", uniqueLabelCount++);
+    }
+    return getRoot().getUniqueLabel();
+  }
 }

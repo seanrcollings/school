@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  *
  * @author edwajohn
  */
-public class FunDeclaration implements Declaration, Node {
+public class FunDeclaration extends AbstractNode implements Declaration {
 
   private final VarType returnType;
   private final String id;
@@ -43,4 +45,19 @@ public class FunDeclaration implements Declaration, Node {
     statement.toCminus(builder, prefix);
   }
 
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    code.append("\n# Code for function main\n");
+    code.append(id).append(":\n");
+
+    // TODO: handle loading in the functions params
+
+    statement.toMIPS(code, data, symbolTable.getChild(0), regAllocator);
+
+    if (id.equals("main")) {
+      Build.syscall(code, Syscall.EXIT);
+    }
+
+    return MIPSResult.createVoidResult();
+  }
 }

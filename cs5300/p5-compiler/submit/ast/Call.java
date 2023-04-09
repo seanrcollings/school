@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  *
  * @author edwajohn
  */
-public class Call implements Expression {
+public class Call extends AbstractNode implements Expression {
 
   private final String id;
   private final List<Expression> args;
@@ -34,4 +36,33 @@ public class Call implements Expression {
     builder.append(")");
   }
 
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    if (id.equals("println")) { // println() is implemented in the compiler
+      printlnToMips(code, data, symbolTable, regAllocator);
+    } else {
+      // TODO
+    }
+
+    return MIPSResult.createVoidResult();
+  }
+
+  private void printlnToMips(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    Build.comment(code, "println");
+    MIPSResult res = args.get(0).toMIPS(code, data, symbolTable, regAllocator);
+
+    if (res.getRegister() != null) {
+      Build.line(code, String.format("move $a0 %s", res.getRegister()));
+    } else {
+      Build.line(code, String.format("la $a0 %s", res.getAddress()));
+    }
+
+    Syscall call = res.getType() == VarType.INT ? Syscall.PRINT_INTEGER : Syscall.PRINT_STRING;
+
+    Build.syscall(code, call);
+
+    Build.line(code, "la $a0 newline");
+    Build.syscall(code, Syscall.PRINT_STRING);
+    code.append("\n");
+  }
 }
