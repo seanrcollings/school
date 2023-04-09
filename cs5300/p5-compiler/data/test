@@ -1,19 +1,25 @@
 #! /bin/bash
 
-java -jar ./Mars4_5.jar test1.asm
-java -jar ./Mars4_5.jar test2.asm
-java -jar ./Mars4_5.jar test3.asm
-java -jar ./Mars4_5.jar test4.asm
-java -jar ./Mars4_5.jar test5.asm
-java -jar ./Mars4_5.jar test6.asm
-java -jar ./Mars4_5.jar test7.asm
-java -jar ./Mars4_5.jar test8.asm
-java -jar ./Mars4_5.jar test9.asm
-java -jar ./Mars4_5.jar test10.asm
-java -jar ./Mars4_5.jar test11.asm
-java -jar ./Mars4_5.jar test12.asm
-java -jar ./Mars4_5.jar test13.asm
-java -jar ./Mars4_5.jar test14.asm
+for file in *.asm
+do
+  echo "$file"
+  java -jar ./Mars4_5.jar $file
+done
+
+#java -jar ./Mars4_5.jar test1.asm
+#java -jar ./Mars4_5.jar test2.asm
+#java -jar ./Mars4_5.jar test3.asm
+#java -jar ./Mars4_5.jar test4.asm
+#java -jar ./Mars4_5.jar test5.asm
+#java -jar ./Mars4_5.jar test6.asm
+#java -jar ./Mars4_5.jar test7.asm
+#java -jar ./Mars4_5.jar test8.asm
+#java -jar ./Mars4_5.jar test9.asm
+#java -jar ./Mars4_5.jar test10.asm
+#java -jar ./Mars4_5.jar test11.asm
+#java -jar ./Mars4_5.jar test12.asm
+#java -jar ./Mars4_5.jar test13.asm
+#java -jar ./Mars4_5.jar test14.asm
 
 # This loop runs the Java code to create the .asm then runs the .asm.
 #for i in {1..14}

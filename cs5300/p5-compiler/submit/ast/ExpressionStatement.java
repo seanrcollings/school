@@ -4,6 +4,7 @@
  */
 package submit.ast;
 
+import submit.Build;
 import submit.MIPSResult;
 import submit.RegisterAllocator;
 import submit.SymbolTable;
@@ -29,6 +30,9 @@ public class ExpressionStatement extends AbstractNode implements Statement {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    StringBuilder builder = new StringBuilder();
+    toCminus(builder, "");
+    Build.comment(code, builder.toString());
     return expression.toMIPS(code, data, symbolTable, regAllocator);
   }
 }

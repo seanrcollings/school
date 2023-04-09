@@ -48,13 +48,17 @@ public class Call extends AbstractNode implements Expression {
   }
 
   private void printlnToMips(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-    Build.comment(code, "println");
+    // More than a single arg for this function would be considered a syntax / semantic error
     MIPSResult res = args.get(0).toMIPS(code, data, symbolTable, regAllocator);
 
     if (res.getRegister() != null) {
       Build.line(code, String.format("move $a0 %s", res.getRegister()));
     } else {
-      Build.line(code, String.format("la $a0 %s", res.getAddress()));
+      if (res.getType().equals(VarType.INT)) {
+        Build.line(code, String.format("lw $a0 %s", res.getAddress()));
+      } else {
+        Build.line(code, String.format("la $a0 %s", res.getAddress()));
+      }
     }
 
     Syscall call = res.getType() == VarType.INT ? Syscall.PRINT_INTEGER : Syscall.PRINT_STRING;

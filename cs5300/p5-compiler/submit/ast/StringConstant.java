@@ -4,6 +4,7 @@
  */
 package submit.ast;
 
+import submit.Build;
 import submit.MIPSResult;
 import submit.RegisterAllocator;
 import submit.SymbolTable;
@@ -27,7 +28,7 @@ public class StringConstant extends AbstractNode implements Expression {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     String address = symbolTable.getUniqueLabel();
-    data.append(String.format("%s:  .asciiz %s", address, value));
+    Build.ascii(data, address, value.substring(1, value.length() - 1));
     return MIPSResult.createAddressResult(address, VarType.CHAR);
   }
 }

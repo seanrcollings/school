@@ -24,4 +24,12 @@ public class Build  {
         Build.line(builder, String.format("li $v0 %d", call.value), call.name());
         Build.line(builder, "syscall");
     }
+
+    public static void word(StringBuilder builder, String label, int word) {
+        Build.line(builder, String.format("%10s:    .word %d", label, word));
+    }
+
+    public static void ascii(StringBuilder builder, String label, String string) {
+        Build.line(builder, String.format("%10s:    .asciiz \"%s\"", label, string));
+    }
 }
