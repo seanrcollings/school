@@ -17,17 +17,28 @@ public class SymbolTable {
   private SymbolTable parent;
   private final List<SymbolTable> children;
   private int uniqueLabelCount = 0;
+  private final HashMap<String, Integer> offsets;
+  private int currOffset = 0;
 
   public SymbolTable() {
     table = new HashMap<>();
     parent = null;
     children = new ArrayList<>();
+    offsets = new HashMap<>();
 
     table.put("println", new SymbolInfo("println", null, true));
   }
 
   public void addSymbol(String id, SymbolInfo symbol) {
     table.put(id, symbol);
+    if (!symbol.getFunction()) {
+      currOffset += symbol.getType().getSize();
+      offsets.put(id, currOffset);
+    }
+  }
+
+  public Integer getOffset(String id) {
+    return offsets.get(id);
   }
 
   /**
@@ -76,8 +87,13 @@ public class SymbolTable {
     return curr;
   }
 
-  public int getActivationRecordSize() {
-    return (table.size() - 1) * 4;
+  public int size() {
+    return table
+            .values()
+            .stream()
+            .filter((v) -> !v.getFunction())
+            .mapToInt((v) -> v.getType().getSize())
+            .sum();
   }
 
   public String getUniqueLabel() {

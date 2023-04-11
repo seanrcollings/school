@@ -24,6 +24,7 @@ syscall
 la $a0 newline
 li $v0 4
 syscall
+
 # Get a's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later.
 li $t0 -4
 # Add the stack pointer address to the offset.
@@ -32,6 +33,7 @@ add $t0 $t0 $sp
 li $t1 3
 # complete assignment statement with store
 sw $t1 0($t0)
+
 # Get b's offset from $sp from the symbol table and initialize b's address with it. We'll add $sp later.
 li $t0 -8
 # Add the stack pointer address to the offset.
@@ -40,6 +42,7 @@ add $t0 $t0 $sp
 li $t1 4
 # complete assignment statement with store
 sw $t1 0($t0)
+
 # println
 # Get a's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later.
 li $t1 -4
@@ -47,6 +50,7 @@ li $t1 -4
 add $t1 $t1 $sp
 # Load the value of a.
 lw $t0 0($t1)
+
 # Get b's offset from $sp from the symbol table and initialize b's address with it. We'll add $sp later.
 li $t2 -8
 # Add the stack pointer address to the offset.

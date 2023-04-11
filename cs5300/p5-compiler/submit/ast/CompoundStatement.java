@@ -18,9 +18,11 @@ import java.util.List;
 public class CompoundStatement extends AbstractNode implements Statement {
 
   private final List<Statement> statements;
+  private final SymbolTable symbolTable;
 
-  public CompoundStatement(List<Statement> statements) {
+  public CompoundStatement(List<Statement> statements, SymbolTable symbolTable) {
     this.statements = statements;
+    this.symbolTable = symbolTable;
   }
 
   @Override
@@ -38,16 +40,17 @@ public class CompoundStatement extends AbstractNode implements Statement {
     Build.comment(code, "Entering a new Scope");
     Build.line(
             code,
-            String.format("addi $sp $sp -%d", symbolTable.getActivationRecordSize()),
+            String.format("addi $sp $sp -%d", symbolTable.size()),
             "Update the stack pointer"
     );
 
-    statements.forEach((s) -> s.toMIPS(code, data, symbolTable, regAllocator));
+    // TODO: Send the correct symbol table to children
+    statements.forEach((s) -> s.toMIPS(code, data, this.symbolTable, regAllocator));
 
     Build.comment(code, "Exiting scope");
     Build.line(
             code,
-            String.format("addi $sp $sp %d", symbolTable.getActivationRecordSize()),
+            String.format("addi $sp $sp %d", symbolTable.size()),
             "Update the stack pointer"
     );
     Build.sep(code);

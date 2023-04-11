@@ -32,6 +32,7 @@ public class ExpressionStatement extends AbstractNode implements Statement {
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     StringBuilder builder = new StringBuilder();
     toCminus(builder, "");
+    code.append("\n");
     Build.comment(code, builder.toString());
     return expression.toMIPS(code, data, symbolTable, regAllocator);
   }

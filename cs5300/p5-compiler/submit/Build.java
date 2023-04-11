@@ -7,7 +7,7 @@ public class Build  {
     }
 
     public static void line(StringBuilder builder, String string, String comment) {
-        builder.append(string);
+        builder.append(String.format("%-20s", string));
         if (comment != null) builder.append(" # ").append(comment);
         builder.append("\n");
     }

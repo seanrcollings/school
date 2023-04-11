@@ -28,4 +28,7 @@ public class SymbolInfo {
     return "<" + id + ", " + type + '>';
   }
 
+  public String getId() { return id; }
+  public VarType getType() { return type; }
+  public boolean getFunction() { return function; }
 }

@@ -41,7 +41,7 @@ public class Call extends AbstractNode implements Expression {
     if (id.equals("println")) { // println() is implemented in the compiler
       printlnToMips(code, data, symbolTable, regAllocator);
     } else {
-      // TODO
+      customFuncCallToMips(code, data, symbolTable, regAllocator);
     }
 
     return MIPSResult.createVoidResult();
@@ -64,9 +64,22 @@ public class Call extends AbstractNode implements Expression {
     Syscall call = res.getType() == VarType.INT ? Syscall.PRINT_INTEGER : Syscall.PRINT_STRING;
 
     Build.syscall(code, call);
-
     Build.line(code, "la $a0 newline");
     Build.syscall(code, Syscall.PRINT_STRING);
-    code.append("\n");
+  }
+
+  private void customFuncCallToMips(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    String raReg = regAllocator.getAny();
+    Build.line(code, String.format("move %s $ra", raReg), "Put Return Address in a temp");
+    Build.comment(code, "Store off temporaries");
+    int offset = regAllocator.saveT(code, 0);
+
+    Build.line(code, String.format("addi $sp $sp -%d", offset + symbolTable.size()));
+    Build.line(code, String.format("jal %s", id), "Call the function");
+    Build.line(code, String.format("addi $sp $sp %d", offset + symbolTable.size()));
+    
+    Build.comment(code, "Load temporaries");
+    regAllocator.restoreT(code, 0);
+    Build.line(code, String.format("move $ra %s", raReg), "Load return address back into $ra");
   }
 }

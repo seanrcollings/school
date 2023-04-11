@@ -4,6 +4,11 @@
  */
 package submit.ast;
 
+import submit.Build;
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
@@ -27,8 +32,35 @@ public class Assignment extends AbstractNode implements Expression {
       rhs.toCminus(builder, prefix);
     } else {
       builder.append(type.toString());
-
     }
   }
 
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    String reg = regAllocator.getAny();
+
+    Build.line(
+            code,
+            String.format("li %s -%d", reg, symbolTable.getOffset(mutable.getId())),
+            "Load the offset"
+    );
+    Build.line(
+            code,
+            String.format("add %s %s $sp", reg, reg),
+            "Add stack pointer to the offset for absolute address"
+    );
+
+    MIPSResult res = rhs.toMIPS(code, data, symbolTable, regAllocator);
+
+    Build.line(
+            code,
+            String.format("sw %s 0(%s)", res.getRegister(), reg),
+            "Store to memory"
+    );
+
+    regAllocator.clear(reg);
+    regAllocator.clear(res.getRegister());
+
+    return MIPSResult.createVoidResult();
+  }
 }

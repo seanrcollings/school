@@ -10,12 +10,14 @@ package submit.ast;
  */
 public enum VarType {
 
-  INT("int"), BOOL("bool"), CHAR("char");
+  INT("int", 4), BOOL("bool", 4), CHAR("char", 4);
 
   private final String value;
+  private final int size;
 
-  private VarType(String value) {
+  private VarType(String value, int size) {
     this.value = value;
+    this.size = size;
   }
 
   public static VarType fromString(String s) {
@@ -31,5 +33,8 @@ public enum VarType {
   public String toString() {
     return value;
   }
+
+  public int getSize() { return size; }
+  public String getValue() { return value; }
 
 }

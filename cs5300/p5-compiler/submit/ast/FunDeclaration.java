@@ -52,10 +52,12 @@ public class FunDeclaration extends AbstractNode implements Declaration {
 
     // TODO: handle loading in the functions params
 
-    statement.toMIPS(code, data, symbolTable.getChild(0), regAllocator);
+    statement.toMIPS(code, data, symbolTable, regAllocator);
 
     if (id.equals("main")) {
       Build.syscall(code, Syscall.EXIT);
+    } else {
+      Build.line(code, "jr $ra");
     }
 
     return MIPSResult.createVoidResult();
