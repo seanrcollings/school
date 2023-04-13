@@ -16,7 +16,7 @@ public class SymbolTable {
   private final HashMap<String, SymbolInfo> table;
   private SymbolTable parent;
   private final List<SymbolTable> children;
-  private int uniqueLabelCount = 0;
+  private static int uniqueLabelCount = 0;
   private final HashMap<String, Integer> offsets;
   private int currOffset = 0;
 
@@ -32,13 +32,25 @@ public class SymbolTable {
   public void addSymbol(String id, SymbolInfo symbol) {
     table.put(id, symbol);
     if (!symbol.getFunction()) {
-      currOffset += symbol.getType().getSize();
+      currOffset -= symbol.getType().getSize();
       offsets.put(id, currOffset);
     }
   }
 
   public Integer getOffset(String id) {
-    return offsets.get(id);
+    SymbolTable curr = this;
+    int initialOffset = 0;
+
+    while (curr.offsets.get(id) == null) {
+      curr = curr.getParent();
+
+      if (curr == null)
+        throw new RuntimeException("Could not find the offset for " + id);
+
+      initialOffset += curr.size();
+    }
+
+    return curr.offsets.get(id) + initialOffset;
   }
 
   /**
@@ -97,9 +109,6 @@ public class SymbolTable {
   }
 
   public String getUniqueLabel() {
-    if (parent == null) {
-      return String.format("datalabel%d", uniqueLabelCount++);
-    }
-    return getRoot().getUniqueLabel();
+    return String.format("datalabel%d", uniqueLabelCount++);
   }
 }

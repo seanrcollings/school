@@ -12,7 +12,14 @@ main:
 # Entering a new Scope
 addi $sp $sp -0      # Update the stack pointer
 
-# println(""Hello world"");
+# a = 3;
+
+li $t0 -4            # Load the offset
+add $t0 $t0 $sp      # Add stack pointer to the offset for absolute address
+li $t1 3            
+sw $t1 0($t0)        # Store to memory
+
+# println(""This program prints [1..5] correct."");
 
 la $a0 datalabel0   
 li $v0 4             # PRINT_STRING
@@ -31,4 +38,4 @@ syscall
 .data
 
    newline:    .asciiz "\n"
-datalabel0:    .asciiz "Hello world"
+datalabel0:    .asciiz "This program prints [1..5] correct."

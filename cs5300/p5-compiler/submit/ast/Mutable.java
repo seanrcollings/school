@@ -40,7 +40,7 @@ public class Mutable extends AbstractNode implements Expression {
     String reg = regAllocator.getAny();
     Build.line(
             code,
-            String.format("li %s -%d", reg, symbolTable.getOffset(id)),
+            String.format("li %s %d", reg, symbolTable.getOffset(id)),
             String.format("Load the offset of %s", id)
     );
 

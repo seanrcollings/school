@@ -40,7 +40,7 @@ public class CompoundStatement extends AbstractNode implements Statement {
     Build.comment(code, "Entering a new Scope");
     Build.line(
             code,
-            String.format("addi $sp $sp -%d", symbolTable.size()),
+            String.format("addi $sp $sp -%d", this.symbolTable.getParent().size()),
             "Update the stack pointer"
     );
 
@@ -50,7 +50,7 @@ public class CompoundStatement extends AbstractNode implements Statement {
     Build.comment(code, "Exiting scope");
     Build.line(
             code,
-            String.format("addi $sp $sp %d", symbolTable.size()),
+            String.format("addi $sp $sp %d", this.symbolTable.getParent().size()),
             "Update the stack pointer"
     );
     Build.sep(code);

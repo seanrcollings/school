@@ -7,7 +7,6 @@
 
 j main
 
-# Code for function main
 main:
 # ---------------------------------------
 # Entering a new Scope

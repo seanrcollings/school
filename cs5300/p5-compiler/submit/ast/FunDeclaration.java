@@ -47,12 +47,11 @@ public class FunDeclaration extends AbstractNode implements Declaration {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-    code.append("\n# Code for function main\n");
-    code.append(id).append(":\n");
+    code.append("\n").append(id).append(":\n");
 
-    // TODO: handle loading in the functions params
+    statement.toMIPS(code, data, symbolTable.getChild(0), regAllocator);
 
-    statement.toMIPS(code, data, symbolTable, regAllocator);
+    regAllocator.clearAll();
 
     if (id.equals("main")) {
       Build.syscall(code, Syscall.EXIT);
@@ -60,6 +59,10 @@ public class FunDeclaration extends AbstractNode implements Declaration {
       Build.line(code, "jr $ra");
     }
 
-    return MIPSResult.createVoidResult();
+    if (returnType != null) {
+      return MIPSResult.createAddressResult(symbolTable.getOffset("return").toString(), returnType);
+    } else {
+      return MIPSResult.createVoidResult();
+    }
   }
 }

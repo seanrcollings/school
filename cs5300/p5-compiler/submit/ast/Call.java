@@ -39,15 +39,13 @@ public class Call extends AbstractNode implements Expression {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     if (id.equals("println")) { // println() is implemented in the compiler
-      printlnToMips(code, data, symbolTable, regAllocator);
+      return printlnToMips(code, data, symbolTable, regAllocator);
     } else {
-      customFuncCallToMips(code, data, symbolTable, regAllocator);
+      return customFuncCallToMips(code, data, symbolTable, regAllocator);
     }
-
-    return MIPSResult.createVoidResult();
   }
 
-  private void printlnToMips(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+  private MIPSResult printlnToMips(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     // More than a single arg for this function would be considered a syntax / semantic error
     MIPSResult res = args.get(0).toMIPS(code, data, symbolTable, regAllocator);
 
@@ -66,20 +64,49 @@ public class Call extends AbstractNode implements Expression {
     Build.syscall(code, call);
     Build.line(code, "la $a0 newline");
     Build.syscall(code, Syscall.PRINT_STRING);
+    return MIPSResult.createVoidResult();
   }
 
-  private void customFuncCallToMips(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+  private MIPSResult customFuncCallToMips(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     String raReg = regAllocator.getAny();
     Build.line(code, String.format("move %s $ra", raReg), "Put Return Address in a temp");
     Build.comment(code, "Store off temporaries");
-    int offset = regAllocator.saveT(code, 0);
+    int offset = regAllocator.saveT(code, symbolTable.size()) + symbolTable.size();
 
-    Build.line(code, String.format("addi $sp $sp -%d", offset + symbolTable.size()));
+    Build.comment(code, "Store arguments for function on the stack");
+
+    int argsOffset = offset;
+    for (Expression arg : args) {
+      MIPSResult res = arg.toMIPS(code, data, symbolTable, regAllocator);
+      argsOffset += res.getType().getSize();
+      Build.line(code, String.format("sw %s -%d($sp)", res.getRegister(), argsOffset));
+      regAllocator.clear(res.getRegister());
+    }
+
+    Build.line(code, String.format("addi $sp $sp -%d", offset));
+
     Build.line(code, String.format("jal %s", id), "Call the function");
-    Build.line(code, String.format("addi $sp $sp %d", offset + symbolTable.size()));
-    
+
+
+    Build.line(code, String.format("addi $sp $sp %d", offset));
+
     Build.comment(code, "Load temporaries");
-    regAllocator.restoreT(code, 0);
+    regAllocator.restoreT(code, symbolTable.size());
+    SymbolInfo funcInfo = symbolTable.find(id);
+
     Build.line(code, String.format("move $ra %s", raReg), "Load return address back into $ra");
+    regAllocator.clear(raReg);
+
+    if (funcInfo.getType() != null) {
+      String retReg = regAllocator.getAny();
+      Build.line(
+              code,
+              String.format("lw %s -%d($sp)", retReg, argsOffset + funcInfo.getType().getSize()),
+              "Load return value"
+      );
+      return MIPSResult.createRegisterResult(retReg, funcInfo.getType());
+    }
+
+    return MIPSResult.createVoidResult();
   }
 }

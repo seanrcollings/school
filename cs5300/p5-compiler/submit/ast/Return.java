@@ -4,6 +4,11 @@
  */
 package submit.ast;
 
+import submit.Build;
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
@@ -28,4 +33,15 @@ public class Return extends AbstractNode implements  Statement {
     }
   }
 
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    MIPSResult res = expr.toMIPS(code, data, symbolTable, regAllocator);
+    Build.line(
+            code,
+            String.format("sw %s %d($sp)", res.getRegister(), symbolTable.getOffset("return")),
+            "Store return value"
+    );
+
+    return MIPSResult.createVoidResult();
+  }
 }

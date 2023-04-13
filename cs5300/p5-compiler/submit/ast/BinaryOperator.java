@@ -49,11 +49,11 @@ public class BinaryOperator extends AbstractNode implements Expression {
       case GE -> null;
       case EQ -> null;
       case NE -> null;
+      case MOD -> null;
       case PLUS -> "add";
       case MINUS -> "sub";
       case TIMES -> "mul";
       case DIVIDE -> "div";
-      case MOD -> null;
     };
 
     MIPSResult lhsRes = lhs.toMIPS(code, data, symbolTable, regAllocator);

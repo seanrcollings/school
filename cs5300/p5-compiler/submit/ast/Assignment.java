@@ -41,7 +41,7 @@ public class Assignment extends AbstractNode implements Expression {
 
     Build.line(
             code,
-            String.format("li %s -%d", reg, symbolTable.getOffset(mutable.getId())),
+            String.format("li %s %d", reg, symbolTable.getOffset(mutable.getId())),
             "Load the offset"
     );
     Build.line(

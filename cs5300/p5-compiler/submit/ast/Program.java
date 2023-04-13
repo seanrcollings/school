@@ -40,7 +40,14 @@ public class Program extends AbstractNode implements Node {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     Build.ascii(data, "newline", "\\n");
-    declarations.forEach((n) -> n.toMIPS(code, data, symbolTable, regAllocator));
+    int idx = 0;
+
+    for (Declaration decl: declarations) {
+      SymbolTable childSymbolTable = decl.getClass() == FunDeclaration.class
+              ? symbolTable.getChild(idx++)
+              : symbolTable;
+      decl.toMIPS(code, data, childSymbolTable, regAllocator);
+    }
 
     return MIPSResult.createVoidResult();
   }

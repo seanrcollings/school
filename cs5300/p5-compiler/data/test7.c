@@ -3,6 +3,8 @@ int identity(int x) {
 }
 
 int add(int x, int y) {
+//  println(x);
+//  println(y);
   return x+y;
 }
 
