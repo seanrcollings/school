@@ -16,9 +16,10 @@ public class SymbolTable {
   private final HashMap<String, SymbolInfo> table;
   private SymbolTable parent;
   private final List<SymbolTable> children;
-  private static int uniqueLabelCount = 0;
   private final HashMap<String, Integer> offsets;
   private int currOffset = 0;
+  private static int uniqueLabelCount = 0;
+  private String endLabel = null;
 
   public SymbolTable() {
     table = new HashMap<>();
@@ -90,15 +91,6 @@ public class SymbolTable {
     return parent;
   }
 
-  public SymbolTable getRoot() {
-    SymbolTable curr = this;
-
-    while (curr.getParent() != null)
-      curr = curr.getParent();
-
-    return curr;
-  }
-
   public int size() {
     return table
             .values()
@@ -109,6 +101,17 @@ public class SymbolTable {
   }
 
   public String getUniqueLabel() {
-    return String.format("datalabel%d", uniqueLabelCount++);
+    return String.format("label%d", uniqueLabelCount++);
+  }
+
+  public String getEndLabel() {
+    if (endLabel == null && parent != null)
+      return parent.getEndLabel();
+
+    return endLabel;
+  }
+
+  public void setEndLabel(String endLabel) {
+    this.endLabel = endLabel;
   }
 }

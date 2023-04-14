@@ -41,28 +41,37 @@ public class BinaryOperator extends AbstractNode implements Expression {
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
 
     String instruction = switch (type) {
-      case OR -> null;
-      case AND -> null;
-      case LE -> null;
-      case LT -> null;
-      case GT -> null;
-      case GE -> null;
-      case EQ -> null;
-      case NE -> null;
-      case MOD -> null;
+      // Logical
+      case OR -> "or";
+      case AND -> "and";
+      case LT -> "slt";
+      case GT -> "sgt";
+      case EQ -> "seq";
+      case NE -> "sne";
+      case LE -> "sle";
+      case GE -> "sge";
+      // Arithmetic
       case PLUS -> "add";
       case MINUS -> "sub";
       case TIMES -> "mul";
       case DIVIDE -> "div";
+      case MOD -> "rem";
     };
+
 
     MIPSResult lhsRes = lhs.toMIPS(code, data, symbolTable, regAllocator);
     MIPSResult rhsRes = rhs.toMIPS(code, data, symbolTable, regAllocator);
 
-    regAllocator.clearAll();
+    regAllocator.clear(lhsRes.getRegister());
+    regAllocator.clear(rhsRes.getRegister());
+
     String reg = regAllocator.getAny();
 
-    Build.line(code, String.format("%s %s, %s, %s", instruction, reg, lhsRes.getRegister(), rhsRes.getRegister()));
+    Build.line(
+            code,
+            String.format("%s %s, %s, %s", instruction, reg, lhsRes.getRegister(), rhsRes.getRegister()),
+            Build.source(this)
+    );
 
     return MIPSResult.createRegisterResult(reg, lhsRes.getType());
   }

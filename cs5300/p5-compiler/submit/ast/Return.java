@@ -4,10 +4,7 @@
  */
 package submit.ast;
 
-import submit.Build;
-import submit.MIPSResult;
-import submit.RegisterAllocator;
-import submit.SymbolTable;
+import submit.*;
 
 /**
  *
@@ -41,6 +38,24 @@ public class Return extends AbstractNode implements  Statement {
             String.format("sw %s %d($sp)", res.getRegister(), symbolTable.getOffset("return")),
             "Store return value"
     );
+
+    regAllocator.clear(res.getRegister());
+
+    int size = 0;
+    SymbolTable curr = symbolTable;
+
+    while (curr.getParent() != null) {
+      size += curr.size();
+      curr = curr.getParent();
+    }
+
+    Build.line(
+            code,
+            String.format("addi $sp $sp %d", size),
+            "Add back offset relative to all enclosing scopes"
+    );
+
+    Build.line(code, "jr $ra");
 
     return MIPSResult.createVoidResult();
   }

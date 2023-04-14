@@ -18,12 +18,12 @@ if [ $1 == "all" ]
 then
   for i in {1..14}
   do
-    echo "Running test$i.c"
+    echo "Running test$i.asm"
     $compile && $java -cp ../out/production/p5-compiler:../antlr-4.9.1-complete.jar main.Main ./test$i.c
     $java -jar ./Mars4_5.jar ./test$i.asm
   done
 else
-    $compile && $java -cp ../out/production/p5-compiler:../antlr-4.9.1-complete.jar main.Main ./test$i.c
-    $java -jar ./Mars4_5.jar $1
+    $compile && $java -cp ../out/production/p5-compiler:../antlr-4.9.1-complete.jar main.Main ./test$1.c
+    $java -jar ./Mars4_5.jar ./test$1.asm
 fi
 

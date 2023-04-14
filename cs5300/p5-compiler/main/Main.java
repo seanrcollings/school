@@ -83,6 +83,8 @@ public class Main {
                     "# Declare main as a global function\n" +
                     ".globl\tmain\n\nj main\n");
             mips.append(code.toString());
+            mips.append("# Remaining registers: ").append(regAllocator.getUsed()).append("\n");
+
             mips.append("\n# All memory structures are placed after the\n" +
                     "# .data assembler directive\n" +
                     ".data\n" +

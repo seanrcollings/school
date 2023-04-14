@@ -14,7 +14,7 @@ addi $sp $sp -0      # Update the stack pointer
 
 # println(""Hello world"");
 
-la $a0 datalabel0   
+la $a0 label0       
 li $v0 4             # PRINT_STRING
 syscall             
 la $a0 newline      
@@ -25,10 +25,11 @@ addi $sp $sp 0       # Update the stack pointer
 # ---------------------------------------
 li $v0 10            # EXIT
 syscall             
+# Remaining registers: []
 
 # All memory structures are placed after the
 # .data assembler directive
 .data
 
    newline:    .asciiz "\n"
-datalabel0:    .asciiz "Hello world"
+    label0:    .asciiz "Hello world"

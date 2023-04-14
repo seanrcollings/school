@@ -44,7 +44,6 @@ public class CompoundStatement extends AbstractNode implements Statement {
             "Update the stack pointer"
     );
 
-    // TODO: Send the correct symbol table to children
     statements.forEach((s) -> s.toMIPS(code, data, this.symbolTable, regAllocator));
 
     Build.comment(code, "Exiting scope");

@@ -31,16 +31,29 @@ public class UnaryOperator extends AbstractNode implements Expression {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-    if (type.equals(UnaryOperatorType.NEG)) {
-      Build.comment(code, "Negate expression");
-      MIPSResult res = expression.toMIPS(code, data, symbolTable, regAllocator);
-      String reg = regAllocator.getAny();
-      Build.line(code, String.format("li %s -1", reg));
-      Build.line(code, String.format("mul %s, %s, %s", res.getRegister(), res.getRegister(), reg));
-      regAllocator.clear(reg);
-      return MIPSResult.createRegisterResult(res.getRegister(), res.getType());
-    } else {
-      throw new RuntimeException("Unsupported operator: " + type);
-    }
+
+    return switch (type) {
+      case NOT -> {
+        Build.comment(code, "Invert Boolean");
+        MIPSResult res = expression.toMIPS(code, data, symbolTable, regAllocator);
+        String reg = regAllocator.getAny();
+        Build.line(code, String.format("li %s 1", reg));
+        Build.line(code, String.format("add %s, %s, %s", res.getRegister(), res.getRegister(), reg));
+        regAllocator.clear(res.getRegister());
+        regAllocator.clear(reg);
+        yield MIPSResult.createRegisterResult(res.getRegister(), res.getType());
+      }
+      case NEG -> {
+        Build.comment(code, "Negate expression");
+        MIPSResult res = expression.toMIPS(code, data, symbolTable, regAllocator);
+        String reg = regAllocator.getAny();
+        Build.line(code, String.format("li %s -1", reg));
+        Build.line(code, String.format("mul %s, %s, %s", res.getRegister(), res.getRegister(), reg));
+        regAllocator.clear(res.getRegister());
+        regAllocator.clear(reg);
+        yield MIPSResult.createRegisterResult(res.getRegister(), res.getType());
+      }
+      case DEREF, QUESTION -> throw new RuntimeException("Unsupported operator: " + type);
+    };
   }
 }

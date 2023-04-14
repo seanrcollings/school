@@ -53,9 +53,9 @@ lw $t0 0($t0)        # Load the value of b from memory
 li $t1 -4            # Load the offset of a
 add $t1 $t1 $sp      # Add stack pointer to the offset for absolute address
 lw $t1 0($t1)        # Load the value of a from memory
-sub $t0, $t0, $t1   
+sub $t0, $t0, $t1    # b - a
 li $t1 4            
-add $t0, $t0, $t1   
+add $t0, $t0, $t1    # b - a + 4
 move $a0 $t0        
 li $v0 1             # PRINT_INTEGER
 syscall             
@@ -65,18 +65,16 @@ syscall
 
 # foo();
 
-move $t1 $ra         # Put Return Address in a temp
+move $t0 $ra         # Put Return Address in a temp
 # Store off temporaries
 sw $t0 -12($sp)
-sw $t1 -16($sp)
 # Store arguments for function on the stack
-addi $sp $sp -16    
+addi $sp $sp -12    
 jal foo              # Call the function
-addi $sp $sp 16     
+addi $sp $sp 12     
 # Load temporaries
 lw $t0 -12($sp)
-lw $t1 -16($sp)
-move $ra $t1         # Load return address back into $ra
+move $ra $t0         # Load return address back into $ra
 # Exiting scope
 addi $sp $sp 0       # Update the stack pointer
 # ---------------------------------------
@@ -89,7 +87,7 @@ addi $sp $sp -0      # Update the stack pointer
 
 # println(""This program prints 7 7 7"");
 
-la $a0 datalabel0   
+la $a0 label0       
 li $v0 4             # PRINT_STRING
 syscall             
 la $a0 newline      
@@ -126,10 +124,11 @@ addi $sp $sp 0       # Update the stack pointer
 # ---------------------------------------
 li $v0 10            # EXIT
 syscall             
+# Remaining registers: [$t0, $t1]
 
 # All memory structures are placed after the
 # .data assembler directive
 .data
 
    newline:    .asciiz "\n"
-datalabel0:    .asciiz "This program prints 7 7 7"
+    label0:    .asciiz "This program prints 7 7 7"

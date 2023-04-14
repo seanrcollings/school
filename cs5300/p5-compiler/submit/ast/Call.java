@@ -51,6 +51,7 @@ public class Call extends AbstractNode implements Expression {
 
     if (res.getRegister() != null) {
       Build.line(code, String.format("move $a0 %s", res.getRegister()));
+      regAllocator.clear(res.getRegister());
     } else {
       if (res.getType().equals(VarType.INT)) {
         Build.line(code, String.format("lw $a0 %s", res.getAddress()));
@@ -84,10 +85,7 @@ public class Call extends AbstractNode implements Expression {
     }
 
     Build.line(code, String.format("addi $sp $sp -%d", offset));
-
     Build.line(code, String.format("jal %s", id), "Call the function");
-
-
     Build.line(code, String.format("addi $sp $sp %d", offset));
 
     Build.comment(code, "Load temporaries");

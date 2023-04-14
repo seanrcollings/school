@@ -17,8 +17,10 @@ lw $t0 0($t0)        # Load the value of x from memory
 li $t1 4             # Load the offset of y
 add $t1 $t1 $sp      # Add stack pointer to the offset for absolute address
 lw $t1 0($t1)        # Load the value of y from memory
-add $t0, $t0, $t1   
+add $t0, $t0, $t1    # x + y
 sw $t0 0($sp)        # Store return value
+addi $sp $sp 12      # Add back offset relative to all enclosing scopes
+jr $ra              
 # Exiting scope
 addi $sp $sp 12      # Update the stack pointer
 # ---------------------------------------
@@ -64,6 +66,8 @@ lw $t0 -4($sp)
 move $ra $t0         # Load return address back into $ra
 lw $t0 -16($sp)      # Load return value
 sw $t0 0($sp)        # Store return value
+addi $sp $sp 12      # Add back offset relative to all enclosing scopes
+jr $ra              
 # Exiting scope
 addi $sp $sp 12      # Update the stack pointer
 # ---------------------------------------
@@ -76,7 +80,7 @@ addi $sp $sp -0      # Update the stack pointer
 
 # println(""This program prints 7"");
 
-la $a0 datalabel0   
+la $a0 label0       
 li $v0 4             # PRINT_STRING
 syscall             
 la $a0 newline      
@@ -111,10 +115,11 @@ addi $sp $sp 0       # Update the stack pointer
 # ---------------------------------------
 li $v0 10            # EXIT
 syscall             
+# Remaining registers: [$t0, $t1, $t2]
 
 # All memory structures are placed after the
 # .data assembler directive
 .data
 
    newline:    .asciiz "\n"
-datalabel0:    .asciiz "This program prints 7"
+    label0:    .asciiz "This program prints 7"

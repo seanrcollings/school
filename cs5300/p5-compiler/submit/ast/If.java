@@ -4,6 +4,11 @@
  */
 package submit.ast;
 
+import submit.Build;
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
@@ -40,5 +45,38 @@ public class If extends AbstractNode implements Statement {
       }
     }
 //    builder.append(prefix).append("}");
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    Build.comment(code, "if (" + Build.source(expression) + ")");
+
+    MIPSResult res = expression.toMIPS(code, data, symbolTable, regAllocator);
+    regAllocator.clear(res.getRegister());
+    String reg = regAllocator.getAny();
+    // MIPS sets 1 for true and 0 for false, but the instruction say to consider
+    // 0 a true value, and otherwise it's false, so we subtract one here
+    // to follow that guideline
+    Build.line(code, String.format("subi %s %s 1", reg, res.getRegister()));
+
+    String falseLabel = symbolTable.getUniqueLabel();
+    String endLabel = symbolTable.getUniqueLabel();
+
+    // If
+    Build.line(code, String.format("bne %s $zero %s", reg, falseLabel));
+    trueStatement.toMIPS(code, data, symbolTable, regAllocator);
+    Build.line(code, String.format("j %s", endLabel));
+
+
+    // Else
+    Build.label(code, falseLabel);
+    if (falseStatement != null) {
+      falseStatement.toMIPS(code, data, symbolTable, regAllocator);
+    }
+
+    Build.label(code, endLabel);
+
+    regAllocator.clear(reg);
+    return MIPSResult.createVoidResult();
   }
 }
